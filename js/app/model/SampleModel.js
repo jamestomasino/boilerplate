@@ -1,5 +1,5 @@
-define(['Events', 'Ajax', 'Delegate', 'app/model/CONST'],
-function ( Events, Ajax, Delegate, CONST ){
+define('SampleModel', ['Events', 'Ajax', 'Delegate', 'app/model/CONST'],
+function (              Events,   Ajax,   Delegate,   CONST ){
 	"use strict";
 
 	//---------------------------------------------------------------

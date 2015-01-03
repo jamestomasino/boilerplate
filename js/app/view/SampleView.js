@@ -1,5 +1,5 @@
-define(["Events", "Delegate", "app/model/CONST"],
-function ( Events, Delegate, CONST ){
+define('SampleView', ["Events", "Delegate", "app/model/CONST"],
+function (             Events,   Delegate,   CONST ){
 	"use strict";
 
 	//---------------------------------------------------------------

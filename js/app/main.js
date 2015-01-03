@@ -1,4 +1,5 @@
-define(['require','app/model/SampleModel', 'app/controller/SampleController', 'app/view/SampleView'], function(require) {
+define('main', ['app/model/SampleModel', 'app/controller/SampleController', 'app/view/SampleView'],
+function(        SampleModel,             SampleController,                  SampleView) {
 
 	var SampleModel = require('app/model/SampleModel');
 	var SampleController = require('app/controller/SampleController');
@@ -10,4 +11,5 @@ define(['require','app/model/SampleModel', 'app/controller/SampleController', 'a
 
 	model.applicationStart();
 
+	return model;
 });
