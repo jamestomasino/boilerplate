@@ -38,8 +38,7 @@
 	 */
 	p.applicationStart = function () {
 		this.setApplicationMode( CONST.MODE_SAMPLE );
-
-		Ajax(dataPath, Delegate(this._onDataDone, this));
+		Ajax(dataPath, Delegate(this._onDataDone, this), Delegate(this._onDataFail));
 	};
 
 	/**
@@ -86,7 +85,15 @@
 		this._data = JSON.parse(data);
 		Events.trigger (CONST.APPLICATION_READY);
 		console.log ('data loaded');
-		console.log (this);
+	};
+
+	/**
+	 * Fail handler for data loading
+	 * @param {String} error
+	 * @private
+	 */
+	p._onDataFail = function ( error ) {
+		console.log (error);
 	};
 
 	var namespace = new NS ( 'app.model' );

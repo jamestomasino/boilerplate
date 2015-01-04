@@ -1,35 +1,26 @@
 (function () {
 
-	function Ajax(url, callbackFunction)
-	{
-		this.bindFunction = function (caller, object) {
-			return function() {
-				return caller.apply(object, [object]);
-			};
-		};
+	var Delegate = NS.import('lib.Delegate');
 
+	function Ajax(url, callbackFunction, errorFunction)
+	{
 		this.stateChange = function (object) {
 			if (this.request.readyState==4)
-				this.callbackFunction(this.request.responseText);
+				if (this.request.status === 200) {
+					this.callbackFunction(this.request.responseText);
+				} else {
+					if (typeof this.errorFunction == 'function') this.errorFunction(this.request.statusText);
+				}
 		};
-
-		this.getRequest = function() {
-			if (window.ActiveXObject)
-				return new ActiveXObject('Microsoft.XMLHTTP');
-			else if (window.XMLHttpRequest)
-				return new XMLHttpRequest();
-			return false;
-		};
-
-		this.postBody = (arguments[2] || "");
-
+		this.postBody = (arguments[3] || "");
 		this.callbackFunction=callbackFunction;
+		this.errorFunction=errorFunction;
 		this.url=url;
-		this.request = this.getRequest();
+		this.request = NS.createXMLHTTPObject();
 
 		if(this.request) {
 			var req = this.request;
-			req.onreadystatechange = this.bindFunction(this.stateChange, this);
+			req.onreadystatechange = Delegate(this.stateChange, this);
 
 			if (this.postBody!=="") {
 				req.open("POST", url, true);
