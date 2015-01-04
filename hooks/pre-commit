@@ -9,7 +9,7 @@ TAB=$'\t'
 # File References
 README="$LOCAL_DIR/README.md"
 TODO="$LOCAL_DIR/TODO.md"
-SRC="$LOCAL_DIR/sjs/core"
+SRC="$LOCAL_DIR/js/app"
 
 # Clear the contents from TO DO to the end of file and prepare for appending
 sed -i "" -e '/##\ TODO\ ##/,$ d' $README 2> /dev/null
