@@ -1,5 +1,5 @@
-define("SampleController", ['Events', 'Delegate', 'app/model/CONST'],
-function (                   Events,   Delegate,   CONST ){
+define("SampleController", ['lib/Events', 'lib/Delegate', 'app/model/CONST'],
+function (                   Events,       Delegate,       CONST ){
 	"use strict";
 
 	//---------------------------------------------------------------

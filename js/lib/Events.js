@@ -1,4 +1,4 @@
-define(function () {
+define("Events", function () {
 	"use strict";
 
 	// ## Private variables

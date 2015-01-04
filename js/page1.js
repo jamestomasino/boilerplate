@@ -1,3 +1,1 @@
-require(['./common'], function (common) {
-    require(['app/main']);
-});
+require(['common', 'app/main'], function (common, main) { });

@@ -1,4 +1,4 @@
-define(function () {
+define("Ajax", function () {
 	return function Ajax(url, callbackFunction) {
 		this.bindFunction = function (caller, object) {
 			return function() {

@@ -1,5 +1,5 @@
-define('SampleModel', ['Events', 'Ajax', 'Delegate', 'app/model/CONST'],
-function (              Events,   Ajax,   Delegate,   CONST ){
+define('SampleModel', ['lib/Events', 'lib/Ajax', 'lib/Delegate', 'app/model/CONST'],
+function (              Events,       Ajax,       Delegate,       CONST ){
 	"use strict";
 
 	//---------------------------------------------------------------
@@ -83,6 +83,8 @@ function (              Events,   Ajax,   Delegate,   CONST ){
 	p._onDataDone = function ( data ) {
 		this._data = JSON.parse(data);
 		Events.trigger (CONST.APPLICATION_READY);
+		console.log ('data loaded');
+		console.log (this);
 	};
 
 	return SampleModel;
