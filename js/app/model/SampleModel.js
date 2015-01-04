@@ -1,13 +1,15 @@
-define('SampleModel', ['lib/Events', 'lib/Ajax', 'lib/Delegate', 'app/model/CONST'],
-function (              Events,       Ajax,       Delegate,       CONST ){
+(function(){
 	"use strict";
 
 	//---------------------------------------------------------------
 	//------------------ Global Vars and Libs -----------------------
 	//---------------------------------------------------------------
 
+	var Events = NS.import('lib.Events');
+	var Ajax = NS.import('lib.Ajax');
+	var Delegate = NS.import('lib.Delegate');
+	var CONST = NS.import('app.model.CONST');
 	var dataPath = "data/data.json";
-	var Events = require('Events');
 
 	//---------------------------------------------------------------
 	//---------------------- Constructor ----------------------------
@@ -87,6 +89,7 @@ function (              Events,       Ajax,       Delegate,       CONST ){
 		console.log (this);
 	};
 
-	return SampleModel;
+	var namespace = new NS ( 'app.model' );
+	namespace.SampleModel = SampleModel;
 
-});
+})();

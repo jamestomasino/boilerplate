@@ -1,4 +1,4 @@
-define("CONST", function (){
+(function(){
 	"use strict";
 
 	var CONST = {};
@@ -18,5 +18,7 @@ define("CONST", function (){
 	// CONFIGURATION
 	CONST.UI_BIND_TYPE      = 'touchend click';
 
-	return CONST;
-});
+	var namespace = new NS ( 'app.model' );
+	namespace.CONST = CONST;
+
+})();

@@ -1,12 +1,16 @@
-define("SampleController", ['lib/Events', 'lib/Delegate', 'app/model/CONST'],
-function (                   Events,       Delegate,       CONST ){
+(function(){
 	"use strict";
+
+
+	//define("SampleController", ['lib/Events', 'lib/Delegate', 'app/model/CONST'],
 
 	//---------------------------------------------------------------
 	//------------------ Global Vars and Libs -----------------------
 	//---------------------------------------------------------------
 
-	var Events = require('Events');
+	var Events = NS.import('lib.Events');
+	var Delegate = NS.import('lib.Delegate');
+	var CONST = NS.import('app.model.CONST');
 
 	//---------------------------------------------------------------
 	//---------------------- Constructor ----------------------------
@@ -48,6 +52,7 @@ function (                   Events,       Delegate,       CONST ){
 	};
 
 
-	return SampleController;
+	var namespace = new NS ( 'app.controller' );
+	namespace.SampleController = SampleController;
 
-});
+})();

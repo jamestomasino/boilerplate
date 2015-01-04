@@ -1,5 +1,7 @@
-define("Ajax", function () {
-	return function Ajax(url, callbackFunction) {
+(function () {
+
+	function Ajax(url, callbackFunction)
+	{
 		this.bindFunction = function (caller, object) {
 			return function() {
 				return caller.apply(object, [object]);
@@ -40,5 +42,9 @@ define("Ajax", function () {
 
 			req.send(this.postBody);
 		}
-	};
-});
+	}
+
+	var namespace = new NS ( 'lib' );
+	namespace.Ajax = Ajax;
+
+})();

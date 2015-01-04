@@ -1,4 +1,4 @@
-define("Events", function () {
+(function(){
 	"use strict";
 
 	// ## Private variables
@@ -191,7 +191,8 @@ define("Events", function () {
 
 	// ## Public interface
 
-	return {
+	var namespace = new NS ( 'lib' );
+	namespace.Events = {
 		trigger:        trigger,
 		subscribe:      subscribe,
 		unsubscribe:    unsubscribe,
@@ -205,4 +206,4 @@ define("Events", function () {
 		}
 	};
 
-});
+})();

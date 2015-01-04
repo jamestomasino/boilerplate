@@ -1,6 +1,11 @@
-console.log ('test1');
+NS.baseURL = 'js/';
 
-require(['app/Main'], function (Main) {
-	console.log('test2');
-	Main();
-});
+var SampleModel = NS.import('app.model.SampleModel');
+var SampleController = NS.import('app.controller.SampleController');
+var SampleView = NS.import('app.view.SampleView');
+
+var model = new SampleModel();
+var controller = new SampleController( model );
+var view = new SampleView( '#sample_id' );
+
+model.applicationStart();

@@ -1,12 +1,13 @@
-define('SampleView', ["lib/Events", "lib/Delegate", "app/model/CONST"],
-function (             Events,       Delegate,       CONST ){
+(function(){
 	"use strict";
 
 	//---------------------------------------------------------------
 	//------------------ Global Vars and Libs -----------------------
 	//---------------------------------------------------------------
 
-	var Events = require('Events');
+	var Events = NS.import('lib.Events');
+	var Delegate = NS.import('lib.Delegate');
+	var CONST = NS.import('app.model.CONST');
 
 	//---------------------------------------------------------------
 	//---------------------- Constructor ----------------------------
@@ -48,8 +49,10 @@ function (             Events,       Delegate,       CONST ){
 		console.log ( 'SampleView::onSampleDataEvent -', data );
 	};
 
-	return SampleView;
-});
+	var namespace = new NS ( 'app.view' );
+	namespace.SampleView = SampleView;
+
+})();
 
 
 
