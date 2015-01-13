@@ -70,7 +70,18 @@ been made externally available as a convenience method.
 
 #### Ajax.js ####
 
-Ajax
+`Ajax.js` is a convenience wrapper for the loading of all ajax requests. It
+contains only a single constructor method.
+
+##### new Ajax() #####
+
+The Ajax class takes 3 or 4 parameters: url, callback, error, [post data].
+
+	var getAjaxExample = new Ajax ( url, callbackFunction, errorFunction );
+	var postAjaxExample = new Ajax ( url, callbackFunction, errorFunction, postData );
+
+If a readyState of 4 and request status of 200 are received, your callback
+function will be executed. Otherwise the error function will be called.
 
 #### Events.js ####
 
