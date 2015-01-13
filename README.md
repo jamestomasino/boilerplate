@@ -134,7 +134,7 @@ listener callbacks, especially on the DOM.
 
 	// create a delegate function maintaining scope
 	var c = Delegate(callbackFunc, this);
-	
+
 	// examples of using that function
 	Event.subscribe ('SOME_EVENT', c);
 	Event.unsubscribe ('SOME_EVENT', c);
@@ -145,7 +145,21 @@ App
 
 #### Model ####
 
-Model
+The model controls the business logic of you application. Business logic can be
+a vague term when it come to apps that are primarily front-end. For years I was
+tripped up by this and ended up with massive Views as a result. Take heed from
+my mistake. If your app doesn't have business logic to speak of, consider this
+a ViewModel. It's flexible and can do whatever you'd like.
+
+In the `SampleModel.js` file, an example of a constructor, public method,
+getter/setter, and internal methods are available. The class demonstrates a
+very basic example of a state machine, via ApplicationMode, which may be
+useful. Methods are commented with docstring-esque syntax, which may help
+support some code [editors](http://vim.org) with better code inspection
+support.
+
+The sample model also gives an example of external data loading via an example
+JSON file loaded via ajax.
 
 #### View ####
 
