@@ -141,7 +141,16 @@ listener callbacks, especially on the DOM.
 
 ### App ###
 
-App
+The design of the application logic follows the MVC pattern by way of Observer
+patterns. A subscriber system allows for global binding and triggering of
+events to control application flow. In a multi-page application, the page
+source (`js/page1.js` for example) will load the appropriate Models, Views, and
+Controllers for the given page's content. Components can be reused or shared
+between pages to minimize asset load at runtime and facilitate good OOP
+principals.
+
+Like all library dependencies, each application component makes use of `NS.js`
+to create a namespace for the class and to handle dependency loading.
 
 #### Model ####
 
@@ -155,7 +164,7 @@ In the `SampleModel.js` file, an example of a constructor, public method,
 getter/setter, and internal methods are available. The class demonstrates a
 very basic example of a state machine, via ApplicationMode, which may be
 useful. Methods are commented with docstring-esque syntax, which may help
-support some code [editors](http://vim.org) with better code inspection
+support some code [editors](http://www.vim.org) with better code inspection
 support.
 
 The sample model also gives an example of external data loading via an example
