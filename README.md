@@ -85,11 +85,59 @@ function will be executed. Otherwise the error function will be called.
 
 #### Events.js ####
 
-Events
+`Events.js` is a simple subscriber that allows for a basic global messaging
+system. The main methods are subscribe, unsubscribe, and trigger. There are
+also various logging functions for debugging purposes. This Events class allows
+for the observer pattern which in turn supports the MVC structure of the
+boilerplate.
+
+##### Events.subscribe #####
+
+The `subscribe` method supports 3 parameters: eventName, callback, [priority].
+
+	Events.subscribe('EVENT_NAME', callbackFunc, 10);
+
+By default, events are not proxied to preserve scope. You will likely want to
+use `Delegate` when using this within a class.
+
+##### Events.unsubscribe #####
+
+The opposite of the subscribe method, this will unbind your event listener.
+Only the event name and callback are required. When unsubscribing an event with
+a callback that was created using a Delegate, be sure to save the reference to
+the proxied callback for unbinding.
+
+	Events.unsubscribe('EVENT_NAME', callbackFunc);
+
+##### Events.trigger #####
+
+Triggering an event is simple with the `trigger` method. Three arguments are
+supported: eventName, [data, context].
+
+	Events.trigger('EVENT_NAME');
+	Events.trigger('EVENT_NAME', [arr, of, data]);
+	Events.trigger('EVENT_NAME', [arr, of, data], this);
+
+The data property must be an array. If it isn't, it will be converted to an
+array.
+
+The context value will set the scope of `this` in the callback function. Please
+note this could have strange consequences if you've proxied the callback
+function.
 
 #### Delegate.js ####
 
-Delegate
+`Delegate.js` is a very simple wrapper that enables a global function called
+`Delegate`, which proxies the context of `this` in a function. When using
+class-based structures, it's important to maintain class scope in event
+listener callbacks, especially on the DOM.
+
+	// create a delegate function maintaining scope
+	var c = Delegate(callbackFunc, this);
+	
+	// examples of using that function
+	Event.subscribe ('SOME_EVENT', c);
+	Event.unsubscribe ('SOME_EVENT', c);
 
 ### App ###
 
