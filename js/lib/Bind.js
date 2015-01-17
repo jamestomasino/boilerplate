@@ -5,7 +5,7 @@
 	var Events = NS.import('lib.Events');
 
 	function Bind( object_id ) {
-		this.data_attr = "bind-" + object_id;
+		this.data_attr = "data-bind-" + object_id;
 
 		// Messages
 		this.updateMessage = object_id + ":change";
@@ -30,7 +30,7 @@
 
 	p.changeHandler = function ( evt ) {
 		var target = evt.target || evt.srcElement; // IE8 compatibility
-		var attr_name = target.getAttribute("data-" + this.data_attr);
+		var attr_name = target.getAttribute(this.data_attr);
 		var tag_name = target.tagName.toLowerCase();
 
 		if ( tag_name === "input" || tag_name === "textarea" || tag_name === "select" ) {
@@ -41,7 +41,7 @@
 	};
 
 	p.update = function( prop_name, new_val ){
-		var elements = document.querySelectorAll("[data-" + this.data_attr + "=" + prop_name + "]");
+		var elements = document.querySelectorAll("[" + this.data_attr + "=" + prop_name + "]");
 		var tag_name;
 		this.attributes[ prop_name ] = new_val;
 		var i=elements.length; while (i--) {
@@ -56,7 +56,7 @@
 
 	p.attach = function () {
 		// Remove and re-add listeners on all appropriate DOM elements
-		var elements = document.querySelectorAll("[data-" + this.data_attr + "]");
+		var elements = document.querySelectorAll("[" + this.data_attr + "]");
 		var i=elements.length; while (i--) {
 			if ( document.addEventListener ) {
 				document.removeEventListener( "change", this.changeHandlerProxy, false );
