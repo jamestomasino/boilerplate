@@ -38,7 +38,7 @@
 	 */
 	p.applicationStart = function () {
 		this.setApplicationMode( CONST.MODE_SAMPLE );
-		Ajax(dataPath, Delegate(this._onDataDone, this), Delegate(this._onDataFail));
+		Ajax(dataPath, Delegate(this._onDataDone, this), Delegate(this._onDataFail, this));
 	};
 
 	/**
