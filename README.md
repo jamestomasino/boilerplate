@@ -172,11 +172,43 @@ JSON file loaded via ajax.
 
 #### View ####
 
-View
+The Views of your application are in charge of the DOM. They're created by
+passing a reference to the part of the DOM they will control. They can then
+create, replace, update, and delete the visible interface. They also handle any
+bindable interactions (e.g., buttons, textfields, swipes).
+
+When an interaction takes place in the View, it dispatches Events to inform the
+rest of the application. The View affects no change in the application on its
+own.
+
+The View will listen to Global data events relevant to any data it is
+displaying in order to update itself. Application state changes, list updating,
+pagination, are all examples of Events that might be subscribed in the view.
+
+Some front-end frameworks make use of bi-directional data-binding for much of
+the updating and changing in a View. This boilerplate relies exclusively on a
+subscriber pattern instead to avoid the overhead of data-binding libraries and
+the lack of native support in older browsers. This may be a feature you wish to
+suppliment or add via another microlibrary.
+
+By default there are no dependency libraries in this boilerplate for accessing
+or manipulating the DOM. JQuery, in particular, is overly large and counter to
+the philosophy of this tool.
+
+_A microframework for accessing and binding to DOM elements may be added in the near future._
 
 #### Controller ####
 
-Controller.
+Controllers listen for events from the views and control specific actions by
+manipulating the Model. Your controllers will have a reference to one or more
+Models in your application and will call public methods on those Models to make
+changes.
+
+In the `SampleController.js` file, the example is subscribed to a UI Event.
+When that event fires, the controller calls a sampleMethod on the Model. In
+rare cases, Controllers may also fire events of their own, listened to by other
+controllers. Generally speaking your controller will listen for Events from the
+Views and call direct methods on Models.
 
 - - - - -
 
