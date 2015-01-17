@@ -4,12 +4,12 @@
 	var Delegate = NS.import('lib.Delegate');
 	var Events = NS.import('lib.Events');
 
-	function Bind( object_id ) {
-		this.data_attr = "data-bind-" + object_id;
+	function Bind( objectID ) {
+		this.dataAttr = "data-bind-" + objectID;
 
 		// Messages
-		this.updateMessage = object_id + ":change";
-		this.addMessage = object_id + ":add";
+		this.updateMessage = objectID + ":change";
+		this.addMessage = objectID + ":add";
 
 		// Event Proxies (for easy cleanup)
 		this.changeHandlerProxy = Delegate(this.changeHandler, this);
@@ -29,34 +29,34 @@
 	var p = Bind.prototype;
 
 	p.changeHandler = function ( evt ) {
-		var target = evt.target || evt.srcElement; // IE8 compatibility
-		var attr_name = target.getAttribute(this.data_attr);
-		var tag_name = target.tagName.toLowerCase();
+		var target = evt.target || evt.srcElement;
+		var attrName = target.getAttribute(this.dataAttr);
+		var tagType = target.tagName.toLowerCase();
 
-		if ( tag_name === "input" || tag_name === "textarea" || tag_name === "select" ) {
-			Events.trigger( this.updateMessage, [attr_name, target.value] );
+		if ( tagType === "input" || tagType === "textarea" || tagType === "select" ) {
+			Events.trigger( this.updateMessage, [attrName, target.value] );
 		} else {
-			Events.trigger( this.updateMessage, [attr_name, target.innerHTML] );
+			Events.trigger( this.updateMessage, [attrName, target.innerHTML] );
 		}
 	};
 
-	p.update = function( prop_name, new_val ){
-		var elements = document.querySelectorAll("[" + this.data_attr + "=" + prop_name + "]");
-		var tag_name;
-		this.attributes[ prop_name ] = new_val;
+	p.update = function( propName, val ){
+		var elements = document.querySelectorAll("[" + this.dataAttr + "=" + propName + "]");
+		var tagType;
+		this.attributes[ propName ] = val;
 		var i=elements.length; while (i--) {
-			tag_name = elements[i].tagName.toLowerCase();
-			if ( tag_name === "input" || tag_name === "textarea" || tag_name === "select" ) {
-				elements[i].value = new_val;
+			tagType = elements[i].tagName.toLowerCase();
+			if ( tagType === "input" || tagType === "textarea" || tagType === "select" ) {
+				elements[i].value = val;
 			} else {
-				elements[i].innerHTML = new_val;
+				elements[i].innerHTML = val;
 			}
 		}
 	};
 
 	p.attach = function () {
 		// Remove and re-add listeners on all appropriate DOM elements
-		var elements = document.querySelectorAll("[" + this.data_attr + "]");
+		var elements = document.querySelectorAll("[" + this.dataAttr + "]");
 		var i=elements.length; while (i--) {
 			if ( document.addEventListener ) {
 				document.removeEventListener( "change", this.changeHandlerProxy, false );
@@ -68,12 +68,12 @@
 		}
 	};
 
-	p.set = function( attr_name, val ) {
-		Events.trigger( this.updateMessage, [attr_name, val] );
+	p.set = function( attrName, val ) {
+		Events.trigger( this.updateMessage, [attrName, val] );
 	};
 
-	p.get = function( attr_name ) {
-		return this.attributes[ attr_name ];
+	p.get = function( attrName ) {
+		return this.attributes[ attrName ];
 	};
 
 	p.destroy = function () {
