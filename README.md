@@ -139,6 +139,32 @@ listener callbacks, especially on the DOM.
 	Event.subscribe ('SOME_EVENT', c);
 	Event.unsubscribe ('SOME_EVENT', c);
 
+#### Bind.js ####
+
+Bidirectional data binding is made available through the `Bind` class.
+Instantiating an instance of this class requires a single id parameter. This ID
+will connect to one or more `data-bind-*` properties in the DOM.
+
+	var bindsample = new Bind('bindsample');
+	// Relates to elements with the attribute "data-bind-bindsample"
+
+Any `change` events fired by that element will automatically update the data in
+the Bind instance's attributes list. Likewise, any change to the Bind
+instance's attributes will propgate to the DOM.
+
+Setting or getting an instance's attributes is done via the `set` and `get`
+methods.
+
+	bindsample.set('propname', 'samplevalue');
+
+The above example will update the value or innerHTML of any elements with the
+following attribute:
+
+	data-bind-bindsample=propname
+
+Properties values are updated or inserted into these DOM elements via
+innerHTML, or value if they are input, textarea, or select types.
+
 ### App ###
 
 The design of the application logic follows the MVC pattern by way of Observer
@@ -185,11 +211,8 @@ The View will listen to Global data events relevant to any data it is
 displaying in order to update itself. Application state changes, list updating,
 pagination, are all examples of Events that might be subscribed in the view.
 
-Some front-end frameworks make use of bi-directional data-binding for much of
-the updating and changing in a View. This boilerplate relies exclusively on a
-subscriber pattern instead to avoid the overhead of data-binding libraries and
-the lack of native support in older browsers. This may be a feature you wish to
-suppliment or add via another microlibrary.
+You may also make use of the `Bind` class for bidirectional data binding. See
+the section above for details.
 
 By default there are no dependency libraries in this boilerplate for accessing
 or manipulating the DOM. JQuery, in particular, is overly large and counter to
