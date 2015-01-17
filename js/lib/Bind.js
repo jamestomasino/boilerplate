@@ -43,7 +43,7 @@
 	p.update = function( prop_name, new_val ){
 		var elements = document.querySelectorAll("[data-" + this.data_attr + "=" + prop_name + "]");
 		var tag_name;
-
+		this.attributes[ prop_name ] = new_val;
 		var i=elements.length; while (i--) {
 			tag_name = elements[i].tagName.toLowerCase();
 			if ( tag_name === "input" || tag_name === "textarea" || tag_name === "select" ) {
@@ -69,7 +69,6 @@
 	};
 
 	p.set = function( attr_name, val ) {
-		this.attributes[ attr_name ] = val;
 		Events.trigger( this.updateMessage, [attr_name, val] );
 	};
 
