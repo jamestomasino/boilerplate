@@ -21,7 +21,9 @@ well.
 
 To set up the hooks in your local repository, run the following executable:
 
-    $ hooks/hooks-installer
+```bash
+$ hooks/hooks-installer
+```
 
 Any hook defined in the hooks/ folder will then act as if it were in
 `.git/hooks/`. A pre-commit hook has been included by default. Upon any commit,
@@ -49,7 +51,9 @@ To import another class or library into the current context, use the
 will make the necessary ajax request to load the resource and process it
 synchronously.
 
-	var LocalCopyOfLib = NS.import ("path.to.class.or.lib");
+```javascript
+var LocalCopyOfLib = NS.import ("path.to.class.or.lib");
+```
 
 ##### NS.baseURL #####
 
@@ -57,7 +61,9 @@ Setting the `NS.baseURL` property will allow you to change the root path of
 your external javascript libraries. By default the path is `/`. Be sure to
 include a trailing slash.
 
-	NS.baseURL = 'js/';
+```javascript
+NS.baseURL = 'js/';
+```
 
 ##### NS.createXMLHTTPObject #####
 
@@ -66,7 +72,9 @@ capable of creating a browser-appropriate XMLHttpRequest or ActiveX object.
 This method calls a factory pattern returning the appropriate object and has
 been made externally available as a convenience method.
 
-	var httprequest = NS.createXMLHTTPObject();
+```javascript
+var httprequest = NS.createXMLHTTPObject();
+```
 
 #### Ajax.js ####
 
@@ -77,8 +85,10 @@ contains only a single constructor method.
 
 The Ajax class takes 3 or 4 parameters: url, callback, error, [post data].
 
-	var getAjaxExample = new Ajax ( url, callbackFunction, errorFunction );
-	var postAjaxExample = new Ajax ( url, callbackFunction, errorFunction, postData );
+```javascript
+var getAjaxExample = new Ajax ( url, callbackFunction, errorFunction );
+var postAjaxExample = new Ajax ( url, callbackFunction, errorFunction, postData );
+```
 
 If a readyState of 4 and request status of 200 are received, your callback
 function will be executed. Otherwise the error function will be called.
@@ -95,7 +105,9 @@ boilerplate.
 
 The `subscribe` method supports 3 parameters: eventName, callback, [priority].
 
-	Events.subscribe('EVENT_NAME', callbackFunc, 10);
+```javascript
+Events.subscribe('EVENT_NAME', callbackFunc, 10);
+```
 
 By default, events are not proxied to preserve scope. You will likely want to
 use `Delegate` when using this within a class.
@@ -107,16 +119,20 @@ Only the event name and callback are required. When unsubscribing an event with
 a callback that was created using a Delegate, be sure to save the reference to
 the proxied callback for unbinding.
 
-	Events.unsubscribe('EVENT_NAME', callbackFunc);
+```javascript
+Events.unsubscribe('EVENT_NAME', callbackFunc);
+```
 
 ##### Events.trigger #####
 
 Triggering an event is simple with the `trigger` method. Three arguments are
 supported: eventName, [data, context].
 
-	Events.trigger('EVENT_NAME');
-	Events.trigger('EVENT_NAME', [arr, of, data]);
-	Events.trigger('EVENT_NAME', [arr, of, data], this);
+```javascript
+Events.trigger('EVENT_NAME');
+Events.trigger('EVENT_NAME', [arr, of, data]);
+Events.trigger('EVENT_NAME', [arr, of, data], this);
+```
 
 The data property must be an array. If it isn't, it will be converted to an
 array.
@@ -132,12 +148,14 @@ function.
 class-based structures, it's important to maintain class scope in event
 listener callbacks, especially on the DOM.
 
-	// create a delegate function maintaining scope
-	var c = Delegate(callbackFunc, this);
+```javascript
+// create a delegate function maintaining scope
+var c = Delegate(callbackFunc, this);
 
-	// examples of using that function
-	Event.subscribe ('SOME_EVENT', c);
-	Event.unsubscribe ('SOME_EVENT', c);
+// examples of using that function
+Event.subscribe ('SOME_EVENT', c);
+Event.unsubscribe ('SOME_EVENT', c);
+```
 
 #### Bind.js ####
 
@@ -145,8 +163,10 @@ Bidirectional data binding is made available through the `Bind` class.
 Instantiating an instance of this class requires a single id parameter. This ID
 will connect to one or more `data-bind-*` properties in the DOM.
 
-	var bindsample = new Bind('bindsample');
-	// Relates to elements with the attribute "data-bind-bindsample"
+```javascript
+var bindsample = new Bind('bindsample');
+// Relates to elements with the attribute "data-bind-bindsample"
+```
 
 Any `change` events fired by that element will automatically update the data in
 the Bind instance's attributes list. Likewise, any change to the Bind
@@ -155,12 +175,16 @@ instance's attributes will propgate to the DOM.
 Setting or getting an instance's attributes is done via the `set` and `get`
 methods.
 
-	bindsample.set('propname', 'samplevalue');
+```javascript
+bindsample.set('propname', 'samplevalue');
+```
 
 The above example will update the value or innerHTML of any elements with the
-following attribute:
+appropriate attribute, like the following example:
 
-	data-bind-bindsample=propname
+```html
+	<div data-bind-bindsample="propname"></div>
+```
 
 Properties values are updated or inserted into these DOM elements via
 innerHTML, or value if they are input, textarea, or select types.
@@ -217,8 +241,6 @@ the section above for details.
 By default there are no dependency libraries in this boilerplate for accessing
 or manipulating the DOM. JQuery, in particular, is overly large and counter to
 the philosophy of this tool.
-
-_A microframework for accessing and binding to DOM elements may be added in the near future._
 
 #### Controller ####
 
