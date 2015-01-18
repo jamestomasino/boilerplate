@@ -199,6 +199,12 @@ Controllers for the given page's content. Components can be reused or shared
 between pages to minimize asset load at runtime and facilitate good OOP
 principals.
 
+_If you prefer to use a different presentation pattern than MVC, the libraries
+available in this boilerplate should allow you to easily restructure the app to
+your needs. I recommend reviewing the [excellent blog
+post](https://manojjaggavarapu.wordpress.com/2012/05/02/presentation-patterns-mvc-mvp-pm-mvvm/)
+by Manoj Jaggavarapu on the subject._
+
 Like all library dependencies, each application component makes use of `NS.js`
 to create a namespace for the class and to handle dependency loading.
 
