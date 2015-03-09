@@ -26,18 +26,20 @@
 
 	NS.load = function ( NSStrings, callback, scope ) {
 		var isCallbackAdded = false;
+
 		for (var i = 0; i < NSStrings.length; ++i) {
 			var j = NS.loaded.length; while (j--) {
 				if (NS.loaded[j] == NSStrings[i]) {
 					continue;
 				}
-				if (!isCallbackAdded) {
-					isCallbackAdded = true;
-					NS.proccessLoad ( NSStrings[i], callback, scope );
-				}
-				else NS.processLoad ( NSStrings[i] );
 			}
+			if (!isCallbackAdded) {
+				isCallbackAdded = true;
+				NS.processLoad ( NSStrings[i], callback, scope );
+			}
+			else NS.processLoad ( NSStrings[i] );
 		}
+		if (! NS.isProcessing) NS.processQueue();
 	}
 
 	NS.import = function ( NSString ) {
@@ -76,10 +78,22 @@
 			}
 			scriptURL = scriptURL + '.js';
 
-			var xhrObj = NS.createXMLHTTPObject();
-			xhrObj.onload = NS.onLoad;
-			xhrObj.open('GET', NS.baseURL + scriptURL, true);
-			xhrObj.send('');
+			var se = NS.global.document.createElement('script');
+			se.type = "text/javascript";
+			se.src=NS.baseURL + scriptURL;
+			//real browsers
+			se.onload=NS.onLoad;
+			//Internet explorer
+			se.onreadystatechange = function() {
+				if (this.readyState == 'complete') {
+					NS.onLoad();
+				}
+			}
+			NS.global.document.getElementsByTagName('head')[0].appendChild(se);
+			//var xhrObj = NS.createXMLHTTPObject();
+			//xhrObj.onload = NS.onLoad;
+			//xhrObj.open('GET', NS.baseURL + scriptURL, true);
+			//xhrObj.send('');
 		} else {
 			NS.isProcessing = false;
 		}
@@ -91,22 +105,22 @@
 		NSObj.callback = callback;
 		NSObj.scope = scope;
 		NS.queue.push(NSObj);
-		if (! NS.isProcessing) NS.processQueue();
 	}
 
 	NS.onLoad = function () {
+		console.log ('Loaded: ' + NS.currentObj.name);
 		NS.loaded.push(NS.currentObj.name);
 
-		var se = NS.global.document.createElement('script');
-		se.type = "text/javascript";
-		se.text = this.responseText;
-		NS.global.document.getElementsByTagName('head')[0].appendChild(se);
+		//var se = NS.global.document.createElement('script');
+		//se.type = "text/javascript";
+		//se.text = this.responseText;
+		//NS.global.document.getElementsByTagName('head')[0].appendChild(se);
 		NS.onLoadComplete();
 	}
 
 	NS.onLoadComplete = function () {
-		if ( typeof NS.loaded.callback === 'function' ) {
-			NS.loaded.callback.call(NS.loaded.scope);
+		if ( typeof NS.currentObj.callback === 'function' ) {
+			NS.currentObj.callback.call(NS.currentObj.scope);
 		}
 
 		NS.processQueue();

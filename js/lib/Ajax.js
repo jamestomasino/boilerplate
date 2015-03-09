@@ -1,41 +1,46 @@
 (function () {
+	"use strict"
 
-	var Delegate = NS.import('lib.Delegate');
+	NS.load ( ['lib.Delegate'], function () {
 
-	function Ajax(url, callbackFunction, errorFunction)
-	{
-		this.stateChange = function (object) {
-			if (this.request.readyState==4)
-				if (this.request.status === 200) {
-					this.callbackFunction(this.request.responseText);
+		var Delegate = NS.import('lib.Delegate');
+
+		function Ajax(url, callbackFunction, errorFunction)
+		{
+			this.stateChange = function (object) {
+				if (this.request.readyState==4)
+					if (this.request.status === 200) {
+						this.callbackFunction(this.request.responseText);
+					} else {
+						if (typeof this.errorFunction == 'function') this.errorFunction(this.request.statusText);
+					}
+			};
+			this.postBody = (arguments[3] || "");
+			this.callbackFunction=callbackFunction;
+			this.errorFunction=errorFunction;
+			this.url=url;
+			this.request = NS.createXMLHTTPObject();
+
+			if(this.request) {
+				var req = this.request;
+				req.onreadystatechange = Delegate(this.stateChange, this);
+
+				if (this.postBody!=="") {
+					req.open("POST", url, true);
+					req.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+					req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+					req.setRequestHeader('Connection', 'close');
 				} else {
-					if (typeof this.errorFunction == 'function') this.errorFunction(this.request.statusText);
+					req.open("GET", url, true);
 				}
-		};
-		this.postBody = (arguments[3] || "");
-		this.callbackFunction=callbackFunction;
-		this.errorFunction=errorFunction;
-		this.url=url;
-		this.request = NS.createXMLHTTPObject();
 
-		if(this.request) {
-			var req = this.request;
-			req.onreadystatechange = Delegate(this.stateChange, this);
-
-			if (this.postBody!=="") {
-				req.open("POST", url, true);
-				req.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-				req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-				req.setRequestHeader('Connection', 'close');
-			} else {
-				req.open("GET", url, true);
+				req.send(this.postBody);
 			}
-
-			req.send(this.postBody);
 		}
-	}
 
-	var namespace = new NS ( 'lib' );
-	namespace.Ajax = Ajax;
+		var namespace = new NS ( 'lib' );
+		namespace.Ajax = Ajax;
+
+	});
 
 })();
