@@ -1,8 +1,5 @@
 (function() {
 
-	// Enable access to global space even in ECMAScript 5 Strict
-	NS.global = (function(){ return this || (1,eval)('this') })();
-
 	function NS (NSString) {
 		var parts = NSString.split('.');
 		var parent = NS.global;
@@ -17,7 +14,31 @@
 		return parent;
 	}
 
+	// Enable access to global space even in ECMAScript 5 Strict
+	NS.global = (function(){ return this || (1,eval)('this') })();
+
 	NS.baseURL = '';
+
+	NS.queue = [];
+	NS.loaded = [];
+	NS.currentObj = null;
+	NS.isProcessing = false;
+
+	NS.load = function ( NSStrings, callback, scope ) {
+		var isCallbackAdded = false;
+		for (var i = 0; i < NSStrings.length; ++i) {
+			var j = NS.loaded.length; while (j--) {
+				if (NS.loaded[j] == NSStrings[i]) {
+					continue;
+				}
+				if (!isCallbackAdded) {
+					isCallbackAdded = true;
+					NS.proccessLoad ( NSStrings[i], callback, scope );
+				}
+				else NS.processLoad ( NSStrings[i] );
+			}
+		}
+	}
 
 	NS.import = function ( NSString ) {
 		var parts = NSString.split('.'),
@@ -27,11 +48,8 @@
 		for ( var i = 0, length = parts.length; i < length; i++ ) {
 			currentPart = parts[i];
 			if ( typeof parent[currentPart] == 'undefined') {
-				NS.load ( NSString );
-				if ( typeof parent[currentPart] == 'undefined') {
-					throw ('ERROR::[ Namespace does not exist: ' + NSString + ' ]' );
-					return;
-				}
+				throw ('ERROR::[ Namespace does not exist: ' + NSString + ' ]' );
+				return;
 			}
 			parent = parent[currentPart];
 		}
@@ -39,19 +57,59 @@
 		return parent;
 	}
 
-	NS.load = function ( NSString ) {
-		var xhrObj = NS.createXMLHTTPObject();
-		var scriptURL = NSString;
-		while (scriptURL.indexOf('.') != -1) {
-			scriptURL = scriptURL.replace('.', '/');
+	NS.processQueue = function () {
+		if (NS.queue.length > 0) {
+			NS.isProcessing = true;
+
+			NS.currentObj = NS.queue.pop();
+			var scriptURL = NS.currentObj.name;
+
+			var i = NS.loaded.length; while (i--) {
+				if (NS.loaded[i] == scriptURL) {
+					NS.onLoadComplete();
+					return;
+				}
+			}
+
+			while (scriptURL.indexOf('.') != -1) {
+				scriptURL = scriptURL.replace('.', '/');
+			}
+			scriptURL = scriptURL + '.js';
+
+			var xhrObj = NS.createXMLHTTPObject();
+			xhrObj.onload = NS.onLoad;
+			xhrObj.open('GET', NS.baseURL + scriptURL, true);
+			xhrObj.send('');
+		} else {
+			NS.isProcessing = false;
 		}
-		scriptURL = scriptURL + '.js';
-		xhrObj.open('GET', NS.baseURL + scriptURL, false);
-		xhrObj.send('');
+	}
+
+	NS.processLoad = function ( NSString, callback, scope ) {
+		var NSObj = {};
+		NSObj.name = NSString;
+		NSObj.callback = callback;
+		NSObj.scope = scope;
+		NS.queue.push(NSObj);
+		if (! NS.isProcessing) NS.processQueue();
+	}
+
+	NS.onLoad = function () {
+		NS.loaded.push(NS.currentObj.name);
+
 		var se = NS.global.document.createElement('script');
 		se.type = "text/javascript";
-		se.text = xhrObj.responseText;
+		se.text = this.responseText;
 		NS.global.document.getElementsByTagName('head')[0].appendChild(se);
+		NS.onLoadComplete();
+	}
+
+	NS.onLoadComplete = function () {
+		if ( typeof NS.loaded.callback === 'function' ) {
+			NS.loaded.callback.call(NS.loaded.scope);
+		}
+
+		NS.processQueue();
 	}
 
 	NS.XMLHttpFactories = [
