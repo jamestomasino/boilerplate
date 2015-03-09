@@ -78,22 +78,10 @@
 			}
 			scriptURL = scriptURL + '.js';
 
-			var se = NS.global.document.createElement('script');
-			se.type = "text/javascript";
-			se.src=NS.baseURL + scriptURL;
-			//real browsers
-			se.onload=NS.onLoad;
-			//Internet explorer
-			se.onreadystatechange = function() {
-				if (this.readyState == 'complete') {
-					NS.onLoad();
-				}
-			}
-			NS.global.document.getElementsByTagName('head')[0].appendChild(se);
-			//var xhrObj = NS.createXMLHTTPObject();
-			//xhrObj.onload = NS.onLoad;
-			//xhrObj.open('GET', NS.baseURL + scriptURL, true);
-			//xhrObj.send('');
+			var xhrObj = NS.createXMLHTTPObject();
+			xhrObj.onload = NS.onLoad;
+			xhrObj.open('GET', NS.baseURL + scriptURL, true);
+			xhrObj.send('');
 		} else {
 			NS.isProcessing = false;
 		}
@@ -108,13 +96,31 @@
 	}
 
 	NS.onLoad = function () {
-		console.log ('Loaded: ' + NS.currentObj.name);
 		NS.loaded.push(NS.currentObj.name);
 
-		//var se = NS.global.document.createElement('script');
-		//se.type = "text/javascript";
-		//se.text = this.responseText;
-		//NS.global.document.getElementsByTagName('head')[0].appendChild(se);
+		var se = NS.global.document.createElement('script');
+		se.type = "text/javascript";
+		se.text = this.responseText;
+		NS.global.document.getElementsByTagName('head')[0].appendChild(se);
+
+		console.log ('Loaded: ' + NS.currentObj.name);
+
+		var NSString = NS.currentObj.name;
+		var parts = NSString.split('.'),
+		parent = NS.global,
+		currentPart = '';
+
+		for ( var i = 0, length = parts.length; i < length; i++ ) {
+			currentPart = parts[i];
+			if ( typeof parent[currentPart] == 'undefined') {
+				throw ('ERROR::[ Namespace does not exist: ' + NSString + ' ]' );
+				return;
+			}
+			parent = parent[currentPart];
+		}
+
+		console.log (parent);
+
 		NS.onLoadComplete();
 	}
 
