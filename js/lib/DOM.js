@@ -1,6 +1,12 @@
 (function () {
 
-	var m = function( a, b, c ) {
+	var DOM = {};
+
+	// Usage:
+	// var el = DOM.create('<h1>hello world!</h1>');
+	// document.body.appendChild(el);
+
+	DOM.create = function( a, b, c ) {
 		b = document;
 		c = b.createElement("p");
 		c.innerHTML = a;
@@ -9,7 +15,12 @@
 		return a;
 	};
 
-	var g = function( a, b ){
+	// Usage:
+	// var el = DOM.get('#someid');
+	// var els = DOM.get('.someclass');
+	// var els = DOM.get('li', someContextElement);
+
+	DOM.get = function( a, b ){
 		a = a.match(/^(\W)?(.*)/);
 		return( b || document)[ "getElement" + (
 		  a[1]
@@ -20,10 +31,6 @@
 		)
 	  ]( a[2])                   // called with the name.
 	};
-
-	var DOM = {};
-	DOM.add = m;
-	DOM.get = g;
 
 	var namespace = new NS ( 'lib' );
 	namespace.DOM = DOM;
