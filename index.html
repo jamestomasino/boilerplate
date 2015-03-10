@@ -9,9 +9,15 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
 
 		<title>Sample Project</title>
+
+    <script>document.cookie='resolution='+Math.max(screen.width,screen.height)+'; path=/';</script>
+
 		<link rel="stylesheet" href="css/main.css" type="text/css" media="screen" charset="utf-8" />
+		<link rel="stylesheet" href="css/page1.css" type="text/css" media="screen" charset="utf-8" />
+		<link rel="stylesheet" href="css/lang.css" type="text/css" media="screen" charset="utf-8" />
 	</head>
 	<body>
+    <img class="bg" src="images/bg.jpg" alt="bg"></img>
 		<div class="wrapper">
 			<div class="sample_div" data-bind-testbind="testbindprop">100</div>
 			<input class="sample_input" data-bind-testbind="testbindprop" value="100"></input>
