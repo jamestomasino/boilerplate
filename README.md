@@ -58,14 +58,14 @@ NS.load (['lib.to.Load', 'another.lib.Loading'], callback, scope);
 _This method was added as a result of xHR synchronous loading being deprecated
 in the latest JS spec._ 
 
-##### NS.import #####
+##### NS.use #####
 
-To import another class or library into the current context, use the
-`NS.import` method. You can directly reference the lib by its full dot-path at
+To use another class or library into the current context, use the
+`NS.use` method. You can directly reference the lib by its full dot-path at
 any time. This method is provided as a convenience.
 
 ```javascript
-var LocalCopyOfLib = NS.import ("path.to.class.or.lib");
+var LocalCopyOfLib = NS.use ("path.to.class.or.lib");
 ```
 
 ##### NS.baseURL #####
@@ -160,7 +160,7 @@ function.
 
 `Delegate.js` is a very simple wrapper that enables a global function called
 `Delegate`, which proxies the context of `this` in a function. When using
-class-based structures, it's important to maintain class scope in event
+class-based structures, it's useant to maintain class scope in event
 listener callbacks, especially on the DOM.
 
 ```javascript

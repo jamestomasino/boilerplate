@@ -5,8 +5,8 @@
 
 	function classWrapper() {
 
-		var Delegate = NS.import('lib.Delegate');
-		var Events = NS.import('lib.Events');
+		var Delegate = NS.use('lib.Delegate');
+		var Events = NS.use('lib.Events');
 
 		function Bind( objectID ) {
 			this.dataAttr = "data-bind-" + objectID;

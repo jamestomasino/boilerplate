@@ -9,10 +9,10 @@
 		//------------------ Global Vars and Libs -----------------------
 		//---------------------------------------------------------------
 
-		var Events = NS.import('lib.Events');
-		var Ajax = NS.import('lib.Ajax');
-		var Delegate = NS.import('lib.Delegate');
-		var CONST = NS.import('app.model.CONST');
+		var Events = NS.use('lib.Events');
+		var Ajax = NS.use('lib.Ajax');
+		var Delegate = NS.use('lib.Delegate');
+		var CONST = NS.use('app.model.CONST');
 		var dataPath = "data/data.json";
 
 		//---------------------------------------------------------------

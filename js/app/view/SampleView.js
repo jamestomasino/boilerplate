@@ -9,9 +9,9 @@
 		//------------------ Global Vars and Libs -----------------------
 		//---------------------------------------------------------------
 
-		var Events = NS.import('lib.Events');
-		var Delegate = NS.import('lib.Delegate');
-		var CONST = NS.import('app.model.CONST');
+		var Events = NS.use('lib.Events');
+		var Delegate = NS.use('lib.Delegate');
+		var CONST = NS.use('app.model.CONST');
 
 		//---------------------------------------------------------------
 		//---------------------- Constructor ----------------------------

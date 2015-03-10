@@ -24,7 +24,7 @@
 	NS.currentObj = null;
 	NS.isProcessing = false;
 
-	NS.import = function ( NSString ) {
+	NS.use = function ( NSString ) {
 		var parts = NSString.split('.'),
 		parent = NS.global,
 		currentPart = '';

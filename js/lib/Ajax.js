@@ -5,7 +5,7 @@
 
 	function classWrapper() {
 
-		var Delegate = NS.import('lib.Delegate');
+		var Delegate = NS.use('lib.Delegate');
 
 		function Ajax(url, callbackFunction, errorFunction)
 		{
