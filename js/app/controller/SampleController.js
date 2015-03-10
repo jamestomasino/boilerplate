@@ -1,9 +1,9 @@
 (function(){
 	"use strict";
 
-	NS.load ( ['lib.Delegate',
-				'lib.Events',
-				'app.model.CONST'], function () {
+	NS.load ( ['lib.Delegate', 'lib.Events', 'app.model.CONST'], classWrapper, this);
+
+	function classWrapper () {
 		//---------------------------------------------------------------
 		//------------------ Global Vars and Libs -----------------------
 		//---------------------------------------------------------------
@@ -55,6 +55,6 @@
 		var namespace = new NS ( 'app.controller' );
 		namespace.SampleController = SampleController;
 
-	});
+	}
 
 })();

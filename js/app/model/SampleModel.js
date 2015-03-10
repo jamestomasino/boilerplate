@@ -1,10 +1,9 @@
 (function(){
 	"use strict";
 
-	NS.load ( ['lib.Events',
-				'lib.Ajax',
-				'lib.Delegate',
-				'app.model.CONST'], function () {
+	NS.load ( ['lib.Events', 'lib.Ajax', 'lib.Delegate', 'app.model.CONST'], classWrapper, this);
+
+	function classWrapper () {
 
 		//---------------------------------------------------------------
 		//------------------ Global Vars and Libs -----------------------
@@ -103,5 +102,7 @@
 
 		var namespace = new NS ( 'app.model' );
 		namespace.SampleModel = SampleModel;
-	});
+
+	}
+
 })();
