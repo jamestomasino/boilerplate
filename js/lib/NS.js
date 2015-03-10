@@ -13,9 +13,10 @@
 
 		return parent;
 	}
-
 	// Enable access to global space even in ECMAScript 5 Strict
 	NS.global = (function(){ return this || (1,eval)('this') })();
+
+	NS.global.window.onload = function() { NS.processCallbacks(); };
 
 	NS.baseURL = '';
 
@@ -24,7 +25,6 @@
 	NS.loaded = [];
 	NS.currentObj = null;
 	NS.isProcessing = false;
-	NS.isCallbacksSetup = false;
 
 	NS.import = function ( NSString ) {
 		var parts = NSString.split('.'),
@@ -90,7 +90,6 @@
 			NS.onLoadComplete();
 		} else {
 			NS.isProcessing = false;
-			NS.setupCallbacks();
 		}
 	}
 
@@ -103,7 +102,7 @@
 			var se = NS.global.document.createElement('script');
 			se.id = "callbacksHook";
 			se.type = "text/javascript";
-			se.text = "window.onload = function() { NS.processCallbacks(); };";
+			se.text = "";
 			NS.global.document.getElementsByTagName('head')[0].appendChild(se);
 			NS.isCallbacksSetup = true;
 		}
