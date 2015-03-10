@@ -1,7 +1,6 @@
 (function(){
 	"use strict";
 
-	console.log('Bind');
 	NS.load ( ['lib.Delegate', 'lib.Events'], classWrapper, this );
 
 	function classWrapper() {
