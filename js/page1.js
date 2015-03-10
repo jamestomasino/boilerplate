@@ -1,14 +1,10 @@
 NS.baseURL = 'js/';
 
-var libs = ['app.model.SampleModel',
-			'app.controller.SampleController',
-			'app.view.SampleView',
-			'lib.Bind',
-			'lib.DOM',
-			'lib.Storage',
-			'lib.Events'];
+var libs = ['app.model.SampleModel', 'app.controller.SampleController', 'app.view.SampleView', 'lib.Bind', 'lib.DOM', 'lib.Storage', 'lib.Events'];
 
-NS.load ( libs, function () {
+NS.load ( libs, page1, this);
+
+function page1 () {
 
 	console.log ('start');
 
@@ -47,6 +43,5 @@ NS.load ( libs, function () {
 			Storage.set ('testbindprop', val);
 		}
 	});
-
-}, this );
+}
 
