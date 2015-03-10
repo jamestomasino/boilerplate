@@ -41,6 +41,6 @@
 		var namespace = new NS ( 'lib' );
 		namespace.Ajax = Ajax;
 
-	});
+	}, this);
 
 })();
