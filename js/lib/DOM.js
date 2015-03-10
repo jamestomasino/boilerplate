@@ -21,8 +21,14 @@
 	// var els = DOM.get('li', someContextElement);
 
 	DOM.get = function( a, b ){
-		a = a.match(/^(\W)?(.*)/);
-		return ( b || NS.global.document )[ "getElement" + ( a[1] ? a[1] == "#" ? "ById" : "sByClassName" : "sByTagName") ]( a[2] )
+		var c = a.match(/^(\W)?(.*)/);
+		var o;
+
+		if (NS.global.document.getElementsByClassName)
+			o = ( b || NS.global.document )[ "getElement" + ( c[1] ? c[1] == "#" ? "ById" : "sByClassName" : "sByTagName") ]( c[2] )
+		else
+			o = ( b || NS.global.document )["querySelectorAll"]( a );
+		return o;
 	};
 
 	var namespace = new NS ( 'lib' );
