@@ -1,22 +1,45 @@
+AddCharset utf-8 .html
+
 <IfModule mod_rewrite.c>
-  Options +FollowSymlinks
-  RewriteEngine On
+	Options +FollowSymlinks
+	RewriteEngine On
 
-  # Adaptive-Images -----------------------------------------------------------------------------------
+	# Adaptive-Images -----------------------------------------------------------------------------------
 
-  # Add any directories you wish to omit from the Adaptive-Images process on a new line, as follows:
-  # RewriteCond %{REQUEST_URI} !ignore-this-directory
-  # RewriteCond %{REQUEST_URI} !and-ignore-this-directory-too
+	# Add any directories you wish to omit from the Adaptive-Images process on a new line, as follows:
+	# RewriteCond %{REQUEST_URI} !ignore-this-directory
+	# RewriteCond %{REQUEST_URI} !and-ignore-this-directory-too
 
-  RewriteCond %{REQUEST_URI} images
+	RewriteCond %{REQUEST_URI} images
 
-  # don't apply the AI behaviour to images inside AI's cache folder:
-  RewriteCond %{REQUEST_URI} !ai-cache
+	# don't apply the AI behaviour to images inside AI's cache folder:
+	RewriteCond %{REQUEST_URI} !ai-cache
 
-  # Send any GIF, JPG, or PNG request that IS NOT stored inside one of the above directories
-  # to adaptive-images.php so we can select appropriately sized versions
+	# Send any GIF, JPG, or PNG request that IS NOT stored inside one of the above directories
+	# to adaptive-images.php so we can select appropriately sized versions
 
-  RewriteRule \.(?:jpe?g|gif|png)$ adaptive-images.php
+	RewriteRule \.(?:jpe?g|gif|png)$ adaptive-images.php
 
-  # END Adaptive-Images -------------------------------------------------------------------------------
+	#Serve gzip compressed CSS files if they exist and the client accepts gzip.
+	RewriteCond %{HTTP:Accept-encoding} gzip
+	RewriteCond %{REQUEST_FILENAME}\.gz -s
+	RewriteRule ^(.*)\.css $1\.css\.gz [QSA]
+
+	# Serve gzip compressed JS files if they exist and the client accepts gzip.
+	RewriteCond %{HTTP:Accept-encoding} gzip
+	RewriteCond %{REQUEST_FILENAME}\.gz -s
+	RewriteRule ^(.*)\.js $1\.js\.gz [QSA]
+
+	# END Adaptive-Images -------------------------------------------------------------------------------
 </IfModule>
+
+# compress text, HTML, JavaScript, CSS, and XML
+AddOutputFilterByType DEFLATE text/plain
+AddOutputFilterByType DEFLATE text/html
+AddOutputFilterByType DEFLATE text/xml
+AddOutputFilterByType DEFLATE text/css
+AddOutputFilterByType DEFLATE application/xml
+AddOutputFilterByType DEFLATE application/xhtml+xml
+AddOutputFilterByType DEFLATE application/rss+xml
+AddOutputFilterByType DEFLATE application/javascript
+AddOutputFilterByType DEFLATE application/x-javascript
