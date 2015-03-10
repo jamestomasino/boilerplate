@@ -6,8 +6,6 @@ NS.load ( libs, page1, this);
 
 function page1 () {
 
-	console.log ('start');
-
 	var SampleModel = NS.import('app.model.SampleModel');
 	var SampleController = NS.import('app.controller.SampleController');
 	var SampleView = NS.import('app.view.SampleView');
