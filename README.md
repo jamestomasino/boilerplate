@@ -52,7 +52,7 @@ to load the resource and any dependencies. When complete, it will fire the
 callback function. 
 
 ```javascript
-function (['lib.to.Load', 'another.lib.Loading'], callback, scope);
+NS.load (['lib.to.Load', 'another.lib.Loading'], callback, scope);
 ```
 
 _This method was added as a result of xHR synchronous loading being deprecated
