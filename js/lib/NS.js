@@ -83,7 +83,7 @@
 
 			var se = NS.global.document.createElement('script');
 			se.type = "text/javascript";
-			se.text = 'document.write(\'<script type="text/javascript" src="' + NS.baseURL + scriptURL + '"><\/script>\');';
+			se.src = NS.baseURL + scriptURL;
 			NS.global.document.getElementsByTagName('head')[0].appendChild(se);
 			NS.loaded.push(NSString);
 
@@ -110,17 +110,19 @@
 	}
 
 	NS.processCallbacks = function () {
+		var se = NS.global.document.createElement('script');
+		se.type = "text/javascript";
+		se.text = "";
 		var i = NS.callbacks.length; while (i--) {
 			if (! NS.callbacks[i].fired) {
 				if ( typeof NS.callbacks[i].callback === 'function' ) {
-					var se = NS.global.document.createElement('script');
-					se.type = "text/javascript";
-					se.text = "NS.callbacks[" + i + "].callback.call(NS.callbacks[" + i + "].scope);"
-					NS.global.document.getElementsByTagName('head')[0].appendChild(se);
+					se.text += "NS.callbacks[" + i + "].callback.call(NS.callbacks[" + i + "].scope);\n"
 				}
 				NS.callbacks[i].fired = true;
 			}
 		}
+
+		NS.global.document.getElementsByTagName('head')[0].appendChild(se);
 	}
 
 	NS.XMLHttpFactories = [
