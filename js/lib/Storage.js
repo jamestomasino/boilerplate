@@ -1,5 +1,6 @@
 (function () {
 
+	console.log ('Storage');
 	// Usage:
 	// Storage.get('someid');
 	// Storage.set('someid', someval);

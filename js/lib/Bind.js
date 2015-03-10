@@ -1,6 +1,7 @@
 (function(){
 	"use strict";
 
+	console.log('Bind');
 	NS.load ( ['lib.Delegate', 'lib.Events'], classWrapper, this );
 
 	function classWrapper() {
@@ -45,7 +46,7 @@
 		};
 
 		p.update = function( propName, val ){
-			var elements = document.querySelectorAll("[" + this.dataAttr + "=" + propName + "]");
+			var elements = NS.global.document.querySelectorAll("[" + this.dataAttr + "=" + propName + "]");
 			var tagType;
 			this.attributes[ propName ] = val;
 			var i=elements.length; while (i--) {
@@ -60,14 +61,14 @@
 
 		p.attach = function () {
 			// Remove and re-add listeners on all appropriate DOM elements
-			var elements = document.querySelectorAll("[" + this.dataAttr + "]");
+			var elements = NS.global.document.querySelectorAll("[" + this.dataAttr + "]");
 			var i=elements.length; while (i--) {
-				if ( document.addEventListener ) {
-					document.removeEventListener( "change", this.changeHandlerProxy, false );
-					document.addEventListener( "change", this.changeHandlerProxy, false );
+				if ( NS.global.document.addEventListener ) {
+					NS.global.document.removeEventListener( "change", this.changeHandlerProxy, false );
+					NS.global.document.addEventListener( "change", this.changeHandlerProxy, false );
 				} else {
-					document.removeEvent( "change", this.changeHandlerProxy );
-					document.attachEvent( "onchange", this.changeHandlerProxy);
+					NS.global.document.detachEvent( "onchange", this.changeHandlerProxy );
+					NS.global.document.attachEvent( "onchange", this.changeHandlerProxy );
 				}
 			}
 		};
@@ -81,10 +82,10 @@
 		};
 
 		p.destroy = function () {
-			if ( document.addEventListener ) {
-				document.removeEventListener( "change", this.changeHandlerProxy, false );
+			if ( NS.global.document.addEventListener ) {
+				NS.global.document.removeEventListener( "change", this.changeHandlerProxy, false );
 			} else {
-				document.removeEvent( "change", this.changeHandlerProxy );
+				NS.global.document.detachEvent( "change", this.changeHandlerProxy );
 			}
 			Events.unsubscribe( this.updateMessage, this.updateProxy );
 			Events.unsubscribe( this.addMessage, this.attachProxy );

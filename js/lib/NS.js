@@ -48,6 +48,7 @@
 		}
 
 		for (var i = 0; i < NSStrings.length; ++i) {
+
 			var j = NS.loaded.length; while (j--) {
 				if (NS.loaded[j] == NSStrings[i]) {
 					continue;
@@ -80,19 +81,29 @@
 			scriptURL = scriptURL + '.js';
 
 			var xhrObj = NS.createXMLHTTPObject();
-			xhrObj.onload = NS.onLoad;
+			//xhrObj.onload = NS.onLoad;
+
+			var done = false;
+
+			xhrObj.onload = xhrObj.onreadystatechange = function() {
+				if ( !done && (!this.readyState || this.readyState === 4) ) {
+					done = true;
+					NS.onLoad(xhrObj);
+					xhrObj.onload = xhrObj.onreadystatechange = null;
+				}
+			};
 			xhrObj.open('GET', NS.baseURL + scriptURL, true);
 			xhrObj.send('');
-
 		} else {
 			NS.isProcessing = false;
 			NS.processCallbacks();
 		}
 	}
 
-	NS.onLoad = function () {
+	NS.onLoad = function (xhrObj) {
 		NS.loaded.push(NS.currentObj);
-		NS.global.eval(this.responseText);
+		var f = new Function (xhrObj.responseText);
+		f.call(NS.global);
 		NS.onLoadComplete();
 	}
 

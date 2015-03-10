@@ -1,5 +1,6 @@
 (function () {
 
+	console.log('DOM');
 	var DOM = {};
 
 	// Usage:
@@ -7,7 +8,7 @@
 	// document.body.appendChild(el);
 
 	DOM.create = function( a, b, c ) {
-		b = document;
+		b = NS.global.document;
 		c = b.createElement("p");
 		c.innerHTML = a;
 		a = b.createDocumentFragment();
@@ -22,14 +23,7 @@
 
 	DOM.get = function( a, b ){
 		a = a.match(/^(\W)?(.*)/);
-		return( b || document)[ "getElement" + (
-		  a[1]
-			? a[1] == "#"
-			  ? "ById"           // the node by ID,
-			  : "sByClassName"   // the nodes by class name, or
-			: "sByTagName"       // the nodes by tag name,
-		)
-	  ]( a[2])                   // called with the name.
+		return ( b || NS.global.document )[ "getElement" + ( a[1] ? a[1] == "#" ? "ById" : "sByClassName" : "sByTagName") ]( a[2] )
 	};
 
 	var namespace = new NS ( 'lib' );
