@@ -1,7 +1,9 @@
 (function () {
 	"use strict"
 
-	NS.load ( ['lib.Delegate'], function () {
+	NS.load ( ['lib.Delegate'], classWrapper, this );
+
+	function classWrapper() {
 
 		var Delegate = NS.import('lib.Delegate');
 
@@ -41,6 +43,6 @@
 		var namespace = new NS ( 'lib' );
 		namespace.Ajax = Ajax;
 
-	}, this);
+	}
 
 })();

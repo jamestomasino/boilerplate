@@ -1,7 +1,9 @@
 (function(){
 	"use strict";
 
-	NS.load ( ['lib.Delegate', 'lib.Events'], function () {
+	NS.load ( ['lib.Delegate', 'lib.Events'], classWrapper, this );
+
+	function classWrapper() {
 
 		var Delegate = NS.import('lib.Delegate');
 		var Events = NS.import('lib.Events');
@@ -91,6 +93,6 @@
 		var namespace = new NS ('lib');
 		namespace.Bind = Bind;
 
-	});
+	}
 
 })();
