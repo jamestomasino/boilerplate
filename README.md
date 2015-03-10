@@ -44,12 +44,25 @@ javascript
 `NS.js` (Namespace) manages the loading and access of dependencies across the
 application.
 
+##### NS.load #####
+
+To use another class or library, use the `NS.load` method. If the external 
+resource hasn't already been loaded, NS will make the necessary ajax request 
+to load the resource and any dependencies. When complete, it will fire the 
+callback function. 
+
+```javascript
+function (['lib.to.Load', 'another.lib.Loading'], callback, scope);
+```
+
+_This method was added as a result of xHR synchronous loading being deprecated
+in the latest JS spec._ 
+
 ##### NS.import #####
 
 To import another class or library into the current context, use the
-`NS.import` method. If the external resource hasn't already been loaded, NS
-will make the necessary ajax request to load the resource and process it
-synchronously.
+`NS.import` method. You can directly reference the lib by its full dot-path at
+any time. This method is provided as a convenience.
 
 ```javascript
 var LocalCopyOfLib = NS.import ("path.to.class.or.lib");
@@ -86,12 +99,14 @@ contains only a single constructor method.
 The Ajax class takes 3 or 4 parameters: url, callback, error, [post data].
 
 ```javascript
-var getAjaxExample = new Ajax ( url, callbackFunction, errorFunction );
-var postAjaxExample = new Ajax ( url, callbackFunction, errorFunction, postData );
+var getExample = new Ajax ( url, callbackFunction, errorFunction );
+var postExample = new Ajax ( url, callbackFunction, errorFunction, postData );
 ```
 
 If a readyState of 4 and request status of 200 are received, your callback
 function will be executed. Otherwise the error function will be called.
+
+_Note: calling Ajax without the new keyword will throw errors._
 
 #### Events.js ####
 
