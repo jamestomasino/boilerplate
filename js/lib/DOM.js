@@ -7,14 +7,13 @@
 	// document.body.appendChild(el);
 
 	DOM.create = function( str ) {
-		var a,b,c;
-		b = NS.global.document;
-		c = b.createElement("p");
-		if (c.innerHTML) c.innerHTML = str;
-		else c.innerText = str;
-		a = b.createDocumentFragment();
-		while ( b = c.firstChild ) a.appendChild(b);
-		return a;
+		var frag = document.createDocumentFragment();
+		var elem = document.createElement('div');
+		elem.innerHTML = str;
+		while (elem.childNodes[0]) {
+			frag.appendChild(elem.childNodes[0]);
+		}
+		return frag;
 	};
 
 	// Usage:
@@ -27,13 +26,13 @@
 		var o;
 		var select = "getElement" + ( c[1] ? c[1] == "#" ? "ById" : "sByClassName" : "sByTagName");
 
-		if (select === "getElementsByClassName" && ! NS.global.document.getElementsByClassName) {
-			o = ( b || NS.global.document )["querySelectorAll"]( a );
+		if (select === "getElementsByClassName" && ! document.getElementsByClassName) {
+			o = ( b || document )["querySelectorAll"]( a );
 			if ( /[\ \>]/.test(a) ) {
 				console.log('WARNING: Using IE8 querySelectorAll fallback. This only supports simple selectors, not descendants.');
 			}
 		} else {
-			o = ( b || NS.global.document )[select]( c[2] )
+			o = ( b || document )[select]( c[2] )
 		}
 		return o;
 	};
