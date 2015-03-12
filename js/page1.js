@@ -45,9 +45,10 @@ function page1 () {
 
 	// DOM example
 	var DOM = NS.use('lib.DOM');
-	var wrapperEl = DOM.get('.wrapper')[0]; // Get first element of class array
+	var wrapperEls = DOM.find('.wrapper');
+	var mainWrapper = wrapperEls[0];
 	var DOMtestEl = DOM.create('<p>This is a dynamically created p tag.</p>');
-	wrapperEl.appendChild(DOMtestEl);
+	mainWrapper.appendChild(DOMtestEl);
 
 	// LocalStorage Example
 
