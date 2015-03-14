@@ -15,9 +15,7 @@
 	}
 
 	NS.global = (function(){ return this || (1,eval)('this') })();
-
 	NS.baseURL = '';
-
 	NS.queue = [];
 	NS.callbacks = [];
 	NS.loaded = [];
@@ -42,7 +40,6 @@
 	}
 
 	NS.load = function ( NSStrings, callback, scope ) {
-
 		if (typeof callback === 'function') {
 			NS.callbacks.push ( {'callback':callback, 'scope':scope, 'fired':false} );
 		}
