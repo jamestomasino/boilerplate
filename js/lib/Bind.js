@@ -37,6 +37,8 @@
 			var attrName = target.getAttribute(this.dataAttr);
 			var tagType = target.tagName.toLowerCase();
 
+			console.log ('change handler');
+
 			if ( tagType === "input" || tagType === "textarea" || tagType === "select" ) {
 				Events.trigger( this.updateMessage, [attrName, target.value] );
 			} else {
@@ -64,10 +66,12 @@
 			var i=elements.length; while (i--) {
 				if ( NS.global.document.addEventListener ) {
 					NS.global.document.removeEventListener( "change", this.changeHandlerProxy, false );
+					NS.global.document.removeEventListener( "input", this.changeHandlerProxy, false );
+
 					NS.global.document.addEventListener( "change", this.changeHandlerProxy, false );
+					NS.global.document.addEventListener( "input", this.changeHandlerProxy, false );
 				} else {
-					NS.global.document.detachEvent( "onchange", this.changeHandlerProxy );
-					NS.global.document.attachEvent( "onchange", this.changeHandlerProxy );
+					console.log ('Warning: The events to support proper data binding don\'t exist in ie8');
 				}
 			}
 		};
@@ -81,11 +85,8 @@
 		};
 
 		p.destroy = function () {
-			if ( NS.global.document.addEventListener ) {
-				NS.global.document.removeEventListener( "change", this.changeHandlerProxy, false );
-			} else {
-				NS.global.document.detachEvent( "change", this.changeHandlerProxy );
-			}
+			NS.global.document.removeEventListener( "change", this.changeHandlerProxy, false );
+			NS.global.document.removeEventListener( "input", this.changeHandlerProxy, false );
 			Events.unsubscribe( this.updateMessage, this.updateProxy );
 			Events.unsubscribe( this.addMessage, this.attachProxy );
 		};
