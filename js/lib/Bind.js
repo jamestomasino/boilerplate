@@ -62,8 +62,6 @@
 
 		p.attach = function () {
 			// Remove and re-add listeners on all appropriate DOM elements
-			var elements = NS.global.document.querySelectorAll("[" + this.dataAttr + "]");
-			var i=elements.length; while (i--) {
 				if ( NS.global.document.addEventListener ) {
 					NS.global.document.removeEventListener( "change", this.changeHandlerProxy, false );
 					NS.global.document.removeEventListener( "input", this.changeHandlerProxy, false );
@@ -71,9 +69,10 @@
 					NS.global.document.addEventListener( "change", this.changeHandlerProxy, false );
 					NS.global.document.addEventListener( "input", this.changeHandlerProxy, false );
 				} else {
-					console.log ('Warning: The events to support proper data binding don\'t exist in ie8');
+					console.log('WARNING: IE8 binding will not update on DOM changes');
+					NS.global.document.detachEvent( "onchange", this.changeHandlerProxy );
+					NS.global.document.attachEvent( "onchange", this.changeHandlerProxy );
 				}
-			}
 		};
 
 		p.set = function( attrName, val ) {
@@ -85,8 +84,12 @@
 		};
 
 		p.destroy = function () {
-			NS.global.document.removeEventListener( "change", this.changeHandlerProxy, false );
-			NS.global.document.removeEventListener( "input", this.changeHandlerProxy, false );
+			if ( NS.global.document.addEventListener ) {
+				NS.global.document.removeEventListener( "change", this.changeHandlerProxy, false );
+				NS.global.document.removeEventListener( "input", this.changeHandlerProxy, false );
+			} else {
+				NS.global.document.detachEvent( "onchange", this.changeHandlerProxy );
+			}
 			Events.unsubscribe( this.updateMessage, this.updateProxy );
 			Events.unsubscribe( this.addMessage, this.attachProxy );
 		};
