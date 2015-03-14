@@ -23,7 +23,6 @@
 		 */
 		var SampleController = function ( model ) {
 			this.model = model;
-			console.log ('SampleController');
 
 			Events.subscribe ( CONST.UI_EVENT_NAME_1, Delegate(this._onSampleUIEvent, this) );
 		};
