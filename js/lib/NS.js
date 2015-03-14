@@ -16,122 +16,184 @@
 
 	NS.global = (function(){ return this || (1,eval)('this') })();
 	NS.baseURL = '';
-	NS.queue = [];
-	NS.callbacks = [];
-	NS.loaded = [];
-	NS.currentObj = null;
+
+	// Loading Process Sequence
+	NS.objs = []; // add all new objects here
+	NS.queue = []; // add to queue & remove as they're being loaded
+	NS.loading = []; // add to loading when removed from queue, during load
+	NS.loaded = []; // add to loaded when loading complete, never remove
+	NS.processed = []; // add to processed after executing
+	NS.callbacks = []; // Add callbacks in order, but only at when all processed
+
 	NS.isProcessing = false;
 
 	NS.use = function ( NSString ) {
-		var parts = NSString.split('.'),
-		parent = NS.global,
-		currentPart = '';
+		if (NS.isProcessed(NSString)) {
 
-		for ( var i = 0, length = parts.length; i < length; i++ ) {
-			currentPart = parts[i];
-			if ( typeof parent[currentPart] === 'undefined') {
-				throw ('ERROR::[ Namespace does not exist: ' + NSString + ' ]' );
-				return;
+			var parts = NSString.split('.'),
+			parent = NS.global,
+			currentPart = '';
+
+			for ( var i = 0, length = parts.length; i < length; i++ ) {
+				currentPart = parts[i];
+				if ( typeof parent[currentPart] === 'undefined') {
+					throw ('ERROR::[ Namespace improperly loaded: ' + NSString + ' ]' );
+					return null;
+				}
+				parent = parent[currentPart];
 			}
-			parent = parent[currentPart];
+			return parent;
+		} else {
+			throw ('ERROR::[ Namespace does not exist: ' + NSString + ' ]' );
+			return null;
 		}
-
-		return parent;
 	}
 
 	NS.load = function ( NSStrings, callback, scope ) {
 		if (typeof callback === 'function') {
-			NS.callbacks.push ( {'callback':callback, 'scope':scope, 'fired':false} );
+			NS.callbacks.push ( {'callback':callback, 'scope':scope} );
 		}
 
 		for (var i = 0; i < NSStrings.length; ++i) {
-
-			var j = NS.loaded.length; while (j--) {
-				if (NS.loaded[j] == NSStrings[i]) {
-					continue;
+			if ( !NS.exists( NSStrings[i] ) ) {
+				var NSObj = {};
+				NSObj.id = NSStrings[i];
+				NSObj.path = NSObj.id;
+				while (NSObj.path.indexOf('.') != -1) {
+					NSObj.path = NSObj.path.replace('.', '/');
 				}
+				NSObj.path = NS.baseURL + NSObj.path + '.js';
+				NSObj.isLoaded = false;
+				NSObj.isProcessed = false;
+				NSObj.source = '';
+
+				NS.objs.push(NSObj);
+				NS.queue.push(NSObj);
+
+			} else if ( NS.isLoaded( NSStrings[i] ) && !NS.isProcessed( NSStrings[i]) ) {
+				var moveItem = NS.removeItem( NSStrings[i], NS.loaded );
+				NS.loaded.push(moveItem);
 			}
-			NS.queue.push(NSStrings[i]);
 		}
 
-		if (! NS.isProcessing) NS.processQueue();
-	}
+		if ( !NS.isProcessing ) NS.process();
+	};
 
-	NS.processQueue = function () {
-		if (NS.queue.length > 0) {
-			NS.isProcessing = true;
-
-			NS.currentObj = NS.queue.pop();
-			var scriptURL = NS.currentObj;
-
-			var i = NS.loaded.length; while (i--) {
-				if (NS.loaded[i] == scriptURL) {
-					NS.onLoadComplete();
-					return;
-				}
-			};
-
-			while (scriptURL.indexOf('.') != -1) {
-				scriptURL = scriptURL.replace('.', '/');
+	NS.exists = function ( NSString ) {
+		var i = NS.objs.length; while (i--) {
+			if (NS.objs[i].id === NSString) {
+				return true;
 			}
+		}
+		return false;
+	};
 
-			scriptURL = scriptURL + '.js';
+	NS.isLoaded = function ( NSString ) {
+		var i = NS.objs.length; while (i--) {
+			if (NS.objs[i].id === NSString && NS.objs[i].isLoaded === true) {
+				return true;
+			}
+		}
+		return false;
+	};
 
-			var xhrObj = NS.createXMLHTTPObject();
-			//xhrObj.onload = NS.onLoad;
+	NS.isProcessed = function ( NSString ) {
+		var i = NS.objs.length; while (i--) {
+			if (NS.objs[i].id === NSString && NS.objs[i].isProcessed === true) {
+				return true;
+			}
+		}
+		return false;
+	};
 
-			var done = false;
+	NS.pushToEnd = function ( NSString, queue ) {
+		var i = queue.length; while (i--) {
+			if (queue[i].id === NSString) {
+				queue.push ( queue.splice(i,1)[0] );
+				return;
+			}
+		}
+	};
 
-			xhrObj.onload = xhrObj.onreadystatechange = function() {
-				if ( !done && (!this.readyState || this.readyState === 4) ) {
-					done = true;
-					NS.onLoad(xhrObj);
-					xhrObj.onload = xhrObj.onreadystatechange = null;
-				}
-			};
-			xhrObj.open('GET', NS.baseURL + scriptURL, true);
-			xhrObj.send('');
+	NS.removeItem = function ( NSString, queue ) {
+		var i = queue.length; while (i--) {
+			if (queue[i].id === NSString) {
+				return queue.splice(i,1)[0];
+			}
+		}
+	};
+
+	NS.process = function () {
+		NS.isProcessing = true;
+
+		if (NS.queue.length) {
+			NS.processQueue();
+		} else if (NS.loading.length) {
+			// Do nothing until all loads complete
+		} else if (NS.loaded.length) {
+			NS.processLoaded();
+		} else if (NS.callbacks.length) {
+			NS.processCallbacks();
 		} else {
 			NS.isProcessing = false;
-			NS.processCallbacks();
 		}
+	};
+
+	NS.processQueue = function () {
+		var currentObj = NS.queue.pop();
+		NS.loading.push(currentObj);
+
+		var xhrObj = NS.createXMLHTTPObject();
+		var done = false;
+
+		xhrObj.id = currentObj.id; // for referencing on load
+		xhrObj.onload = xhrObj.onreadystatechange = function() {
+			if ( !done && (!this.readyState || this.readyState === 4) ) {
+				if (!this.status || this.status === 200) {
+					done = true;
+					var currentObj = NS.removeItem(xhrObj.id, NS.loading);
+					if (currentObj) {
+						currentObj.isLoaded = true;
+						NS.loaded.push(currentObj);
+						currentObj.source = xhrObj.responseText;
+					} else {
+						throw ('ERROR::[ Cannot find ' + xhrObj.id + ' in loaded array ]' );
+					}
+					xhrObj.onload = xhrObj.onreadystatechange = null;
+					NS.process();
+				}
+			}
+		};
+		xhrObj.open('GET', currentObj.path, true);
+		xhrObj.send('');
+		NS.process();
 	}
 
-	NS.onLoad = function (xhrObj) {
-		NS.loaded.push(NS.currentObj);
-		var f = new Function (xhrObj.responseText);
+	NS.processLoaded = function () {
+		var currentObj = NS.loaded.pop();
+		currentObj.isProcessed = true;
+		NS.processed.push(currentObj);
+		var f = new Function (currentObj.source);
 		f.call(NS.global);
-		NS.onLoadComplete();
-	}
-
-	NS.onLoadComplete = function () {
-		NS.processQueue();
-	}
+		NS.process();
+	};
 
 	NS.processCallbacks = function () {
-		var callbacksTrigger = "";
-		var i = NS.callbacks.length; while (i--) {
-			if (! NS.callbacks[i].fired) {
-				if ( typeof NS.callbacks[i].callback === 'function' ) {
-					callbacksTrigger += "NS.callbacks[" + i + "].callback.call(NS.callbacks[" + i + "].scope);\n"
-				}
-				NS.callbacks[i].fired = true;
-			}
-		}
-		NS.global.eval(callbacksTrigger);
+		var callObj = NS.callbacks.pop();
+		NS.global.eval( callObj.callback.call( callObj.scope ) );
+		NS.process();
 	}
 
 	NS.XMLHttpFactories = [
-		function () {return new XMLHttpRequest()},
-		function () {return new ActiveXObject("Msxml2.XMLHTTP")},
+		function () {return new ActiveXObject("Microsoft.XMLHTTP")},
 		function () {return new ActiveXObject("Msxml3.XMLHTTP")},
-		function () {return new ActiveXObject("Microsoft.XMLHTTP")}
+		function () {return new ActiveXObject("Msxml2.XMLHTTP")},
+		function () {return new XMLHttpRequest()}
 	];
 
 	NS.createXMLHTTPObject = function () {
 		var xmlhttp = false;
-		for (var i = 0; i < NS.XMLHttpFactories.length; i++) {
-
+		var i = NS.XMLHttpFactories.length; while (i--) {
 			try {
 				xmlhttp = NS.XMLHttpFactories[i]();
 			} catch (e) {
@@ -140,7 +202,7 @@
 			break;
 		}
 		return xmlhttp;
-	}
+	};
 
 	NS.global.NS = NS;
 
