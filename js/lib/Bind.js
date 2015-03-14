@@ -37,8 +37,6 @@
 			var attrName = target.getAttribute(this.dataAttr);
 			var tagType = target.tagName.toLowerCase();
 
-			console.log ('change handler');
-
 			if ( tagType === "input" || tagType === "textarea" || tagType === "select" ) {
 				Events.trigger( this.updateMessage, [attrName, target.value] );
 			} else {
