@@ -1,1 +1,0 @@
-!function(){var o;NS.global.localStorage&&JSON?o={get:function(o){return NS.global.localStorage[o]&&JSON.parse(NS.global.localStorage[o])},set:function(o,l){NS.global.localStorage[o]=JSON.stringify(l)}}:(console.log("Warning: This browser doesn't support localStorage or JSON"),o={get:function(){},set:function(){}});var l=new NS("lib");l.Storage=o}();
