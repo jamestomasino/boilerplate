@@ -176,6 +176,8 @@
 					}
 					xhrObj.onload = xhrObj.onreadystatechange = null;
 					NS.process();
+				} else {
+					console.log("Error", xhrObj.statusText);
 				}
 			}
 		};
