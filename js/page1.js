@@ -4,7 +4,7 @@ NS.baseURL = 'js/';
 // List all page dependencies
 var libs = ['app.model.SampleModel', 'app.controller.SampleController',
 	'app.view.SampleView', 'lib.Bind', 'lib.DOM', 'lib.Storage', 'lib.Events',
-	'lib.Google' ];
+	'lib.Analytics' ];
 
 // Load all page dependencies and initiate page setup via callback
 NS.load ( libs, page1, this);
@@ -61,5 +61,11 @@ function page1 () {
 			Storage.set ('testbindprop', val);
 		}
 	});
+
+	/**********************************************************************/
+	/********************** Google Analytics Example **********************/
+	/**********************************************************************/
+
+	var analytics = new Analytics ( "UA-18127227-2" );
 }
 
