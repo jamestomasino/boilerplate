@@ -66,6 +66,7 @@ function page1 () {
 	/********************** Google Analytics Example **********************/
 	/**********************************************************************/
 
-	var analytics = new Analytics ( "UA-18127227-2" );
+	var Analytics           = NS.use('lib.Analytics');
+	var analytics           = new Analytics ( "UA-18127227-2" );
 }
 
