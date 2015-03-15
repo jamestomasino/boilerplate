@@ -3,7 +3,8 @@ NS.baseURL = 'js/';
 
 // List all page dependencies
 var libs = ['app.model.SampleModel', 'app.controller.SampleController',
-	'app.view.SampleView', 'lib.Bind', 'lib.DOM', 'lib.Storage', 'lib.Events'];
+	'app.view.SampleView', 'lib.Bind', 'lib.DOM', 'lib.Storage', 'lib.Events',
+	'lib.Google' ];
 
 // Load all page dependencies and initiate page setup via callback
 NS.load ( libs, page1, this);
