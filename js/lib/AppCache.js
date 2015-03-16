@@ -17,30 +17,30 @@
 			}
 
 			// Fired after the first cache of the manifest.
-			this.appCache.addEventListener('cached', Delegate( this, this.onCacheCached ), false);
+			this.appCache.addEventListener('cached', Delegate( this.onCacheCached, this ), false);
 
 			// Checking for an update. Always the first event fired in the sequence.
-			this.appCache.addEventListener('checking', Delegate( this, this.onCacheChecking ), false);
+			this.appCache.addEventListener('checking', Delegate( this.onCacheChecking, this ), false);
 
 			// An update was found. The browser is fetching resources.
-			this.appCache.addEventListener('downloading', Delegate( this, this.onCacheDownloading ), false);
+			this.appCache.addEventListener('downloading', Delegate( this.onCacheDownloading, this ), false);
 
 			// The manifest returns 404 or 410, the download failed,
 			// or the manifest changed while the download was in progress.
-			this.appCache.addEventListener('error', Delegate( this, this.onCacheError ), false);
+			this.appCache.addEventListener('error', Delegate( this.onCacheError, this ), false);
 
 			// Fired after the first download of the manifest.
-			this.appCache.addEventListener('noupdate', Delegate( this, this.onCacheNoUpdate ), false);
+			this.appCache.addEventListener('noupdate', Delegate( this.onCacheNoUpdate, this ), false);
 
 			// Fired if the manifest file returns a 404 or 410.
 			// This results in the application cache being deleted.
-			this.appCache.addEventListener('obsolete', Delegate( this, this.onCacheObsolete ), false);
+			this.appCache.addEventListener('obsolete', Delegate( this.onCacheObsolete, this ), false);
 
 			// Fired for each resource listed in the manifest as it is being fetched.
-			this.appCache.addEventListener('progress', Delegate( this, this.onCacheProgress ), false);
+			this.appCache.addEventListener('progress', Delegate( this.onCacheProgress, this ), false);
 
 			// Fired when the manifest resources have been newly redownloaded.
-			this.appCache.addEventListener('updateready', Delegate( this, this.onCacheUpdate ), false);
+			this.appCache.addEventListener('updateready', Delegate( this.onCacheUpdate, this ), false);
 		}
 
 		var p = AppCache.prototype;

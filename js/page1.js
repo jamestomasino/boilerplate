@@ -74,7 +74,7 @@ function page1 () {
 	/**********************************************************************/
 
 	// Requires that a proper manifest be added to the html page.
-	// This example uses appcache.php to serve that purpose
+	// This boilerprate is not configured with AppCache, so this does nada.
 	var AppCache            = NS.use('lib.AppCache');
 	var appCacheMediator    = new AppCache();
 }
