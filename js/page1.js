@@ -4,7 +4,7 @@ NS.baseURL = 'js/';
 // List all page dependencies
 var libs = ['app.model.SampleModel', 'app.controller.SampleController',
 	'app.view.SampleView', 'lib.Bind', 'lib.DOM', 'lib.Storage', 'lib.Events',
-	'lib.Analytics' ];
+	'lib.Analytics', 'lib.AppCache' ];
 
 // Load all page dependencies and initiate page setup via callback
 NS.load ( libs, page1, this);
@@ -68,5 +68,14 @@ function page1 () {
 
 	var Analytics           = NS.use('lib.Analytics');
 	var analytics           = new Analytics ( "UA-18127227-2" );
+
+	/**********************************************************************/
+	/********************* Application Cache Example **********************/
+	/**********************************************************************/
+
+	// Requires that a proper manifest be added to the html page.
+	// This example uses appcache.php to serve that purpose
+	var AppCache            = NS.use('lib.AppCache');
+	var appCacheMediator    = new AppCache();
 }
 
