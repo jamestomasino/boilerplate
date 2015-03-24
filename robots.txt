@@ -4,9 +4,6 @@ Disallow: /tmp
 Disallow: /temp
 Disallow: /logs
 Disallow: /private
-Disallow: /*.xml$
-Disallow: /*.json$
-Disallow: /*.txt$
 
 Sitemap: https://boilerplate.tomasino.org/sitemap.xml
 
