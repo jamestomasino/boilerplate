@@ -8,6 +8,42 @@ extremely small micro-libraries, basic javascript functions and structures can
 remain the style and structure of the website.
 
 - - - - -
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+## Table of Contents ##
+
+- [Hooks](#hooks)
+- [JavaScript](#javascript)
+  - [Micro-Libraries](#micro-libraries)
+    - [NS.js](#nsjs)
+      - [NS.load](#nsload)
+      - [NS.use](#nsuse)
+      - [NS.baseURL](#nsbaseurl)
+      - [NS.createXMLHTTPObject](#nscreatexmlhttpobject)
+    - [Ajax.js](#ajaxjs)
+      - [new Ajax()](#new-ajax)
+    - [Events.js](#eventsjs)
+      - [Events.subscribe](#eventssubscribe)
+      - [Events.unsubscribe](#eventsunsubscribe)
+      - [Events.trigger](#eventstrigger)
+    - [Delegate.js](#delegatejs)
+    - [Bind.js](#bindjs)
+  - [App](#app)
+    - [Model](#model)
+    - [View](#view)
+    - [Controller](#controller)
+- [PHP](#php)
+  - [Adaptive Images](#adaptive-images)
+- [Server](#server)
+  - [.htaccess](#htaccess)
+  - [robots.txt](#robotstxt)
+  - [sitemap.xml](#sitemapxml)
+  - [humans.txt](#humanstxt)
+  - [favicon.ico](#faviconico)
+- [TODO](#todo)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+- - - - -
 
 ## Hooks ##
 
