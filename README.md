@@ -142,7 +142,7 @@ DOM elements.
 ##### DOM.create() #####
 
 Pass a string of HTML to this method to create the elements quickly by way of
-createDocumentFragment. Don’t forget to attach the result where you want it,
+createDocumentFragment. Don't forget to attach the result where you want it,
 though.
 
 ```javascript
@@ -158,12 +158,12 @@ inability to quickly find elements in the DOM. This method helps sort that out.
 ```javascript
 var elementByID = DOM.find('#someid');
 var elementsByClass = DOM.find('.someclass');
-var elementsByNode = DOM.find(‘li’);
-var elementsByContext DOM.find(‘.someclass’, elementForContext);
+var elementsByNode = DOM.find('li' );
+var elementsByContext DOM.find('.someclass', elementForContext);
 ```
 
 To best support older browsers, this method does not try to handle child
-selectors or anything too fancy. It’s faster just to make seperate queries and
+selectors or anything too fancy. It's faster just to make seperate queries and
 use the result as the context of the next.
 
 Also, IE8 does not support querySelectorAll. Certain queries may generate
@@ -187,6 +187,58 @@ If a readyState of 4 and request status of 200 are received, your callback
 function will be executed. Otherwise the error function will be called.
 
 _Note: calling Ajax without the new keyword will throw errors._
+
+#### Analytics.js ####
+
+`Analytics.js` is a skeletal structure designed to wrap and centralize your
+website analytics calls. By default it is configured to use Google Analytics.
+In its present form it does little but wrap that functionality into a class
+structure. 
+
+This class shines best when you have other types of metrics being collected.
+Combining these calls into a single class saves time and makes the code more
+readable. 
+
+The `Analytics.js` class automatically hijacks exit links and adds event tracking.
+
+##### new Analytics() #####
+
+Initialize your analytics class by passing it your Google Analytics ID.
+
+```javascript
+var analytics = new Analytics ( 'UA-971204-A' );
+```
+
+##### Analytics.trackEvent() #####
+
+Track events in a convenient way that doesn't interfere with bounce rates or
+timing.
+
+```javascript
+analytics.trackEvent( category, action, label, value );
+```
+
+Both the label and value parameters are optional.
+
+##### Analytics.trackTime() #####
+
+Timer events are easily fired off with this helper method.
+
+```javascript
+analytics.trackTime( category, variable, value, label );
+```
+
+Value and label are optional parameters.
+
+#### Storage.js ####
+
+`Storage.js` is a localstorage wrapper. It supports JSON processing of objects
+being stored and retreived. This static class has a getter and setter property.
+
+```javascript
+var value = Storage.get('someid');
+Storage.set('someid', someValue);
+```
 
 #### Events.js ####
 
@@ -376,7 +428,7 @@ automatically served to the client by way of Apache MOD_REWRITE directives in
 the .htaccess file (see below). The GD lib is used (normally a default module
 installed with PHP) to support the resizing.
 
-To set up adaptive images, all you’ll need to do is tweak the `$resolutions`
+To set up adaptive images, all you'll need to do is tweak the `$resolutions`
 variable inside the `adaptive-images.php` file in the web root. Match these
 resolutions to your CSS breakpoints and everything should just work. If you
 encounter any issues, make sure that the `images-cache` folder (created
