@@ -55,7 +55,8 @@ callback function.
 NS.load (['lib.to.Load', 'another.lib.Loading'], callback, scope);
 ```
 
-_This method was added as a result of xHR synchronous loading being deprecated
+_This method was added as a result of xHR synchronous loading [being
+deprecated](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Synchronous_and_Asynchronous_Requests#Synchronous_request)
 in the latest JS spec._ 
 
 ##### NS.use #####
