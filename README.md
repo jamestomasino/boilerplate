@@ -35,7 +35,16 @@ searching all javascript code for instances of `//TODO:`.
 
 ## JavaScript ##
 
-javascript
+The overall objective of the javascript used in this boilerplate is to do away
+with the need for 3rd party libraries like jQuery. Instead, small libraries are
+created with as little dependency as possible. These can be chained together
+and use one another by way of the NS (NameSpace) library. By eliminating jQuery
+and other massive libraries, the focus can be back on writing pure, vanilla
+javascript code. There is no other framework to learn or adapt to. In fact, the
+MVC pattern used below in the App section can be completely removed and
+replaced by a single page file if that better suits your needs. Everything here
+is designed to be as modular as it can with the exception of `NS.js`, which
+serves as the dependency loader.
 
 ### Micro-Libraries ###
 
@@ -279,6 +288,7 @@ Views and call direct methods on Models.
 
 - - - - -
 
-_Anything below this line will be overwritten upon commit._
+_Anything below this line will be overwritten upon commit. See the section on
+Hooks, above, for more details._
 ## TODO ##
 
