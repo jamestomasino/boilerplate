@@ -1,6 +1,14 @@
 (function () {
 	"use strict";
 
+	/*************************************************************************/
+	/***************************** Analytics *********************************/
+	/*************************************************************************/
+
+	/* This lib is a bit of overkill if you're only using a single analytics
+	 * toolset, like GoogleAnalytics. If you are using multiple, you can
+	 * connect them here and use the same methods to drive each. */
+
 	var Analytics = function ( google_id ) {
 
 		// Add Google Analytics script tag
@@ -31,8 +39,16 @@
 
 	var p = Analytics.prototype;
 
-	p.trackTime = function ( component, time ) {
-		ga( 'send', 'timing', 'component', component, time );
+	p.trackTime = function ( category, variable, value, label) {
+		var trackObj {
+			'timingCategory': category,
+			'timingVar': variable
+		};
+
+		if (typeof value == 'number') trackObj.timingValue = value;
+		if (typeof label !== 'undefined') trackObj.timingLabel = label;
+
+		ga('send', 'timing', trackObj );
 	};
 
 	p.trackEvent = function ( category, action, label, value ) {
