@@ -288,6 +288,23 @@ Views and call direct methods on Models.
 
 - - - - -
 
+
+## PHP ##
+
+### Adaptive Images ###
+
+- - - - -
+
+## Server ##
+
+### .htaccess ###
+### robots.txt ###
+### sitemap.xml ###
+### humans.txt ###
+### favicon.ico ###
+
+- - - - -
+
 _Anything below this line will be overwritten upon commit. See the section on
 Hooks, above, for more details._
 ## TODO ##
