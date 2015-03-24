@@ -315,6 +315,8 @@ images. Also, be sure that you are taking advantage of the included `.htaccess`
 file. It is hidden by default in many operating systems and may be easily
 overlooked by FTP clients.
 
+_Some small customizations have been made to the adaptive-images code in both
+PHP and javascript to improve performance._
 
 - - - - -
 
@@ -325,7 +327,7 @@ overlooked by FTP clients.
 The included `.htaccess` file performs a number of desirable tasks, including
 the following:
 
-- Rewrites all directory URLs with trailing /’s (for SEO)
+- Rewrites all directory URLs with trailing /'s (for SEO)
 - Supports Adaptive Images (see above)
 - GZip compresses many common MIME-types
 - Sets Access-Control-Allow-Origin directives
@@ -359,6 +361,10 @@ The format in this project losely follows that of
 [HTML5Boilerplate](https://html5boilerplate.com/humans.txt).
 
 ### favicon.ico ###
+
+A sample `favicon.ico` file has been included mainly so that it's not
+forgotten. Hopefully a big black box will serve as a nice reminder to put
+something meaningful together.
 
 - - - - -
 
