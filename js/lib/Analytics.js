@@ -35,9 +35,47 @@
 		}
 		window.ga('send', 'pageview');
 
+		// Bind exit links
+		this.addEvent(document.body, 'click', this.onBodyClick);
 	};
 
 	var p = Analytics.prototype;
+
+	p.addEvent = function(el, eventName, handler) {
+		if (el.addEventListener) {
+			el.addEventListener(eventName, handler);
+		} else {
+			el.attachEvent('on' + eventName, function(){
+				handler.call(el);
+			});
+		}
+	};
+
+	p.onBodyClick = function (event) {
+		var el = event.srcElement || event.target;
+
+		/* Loop up the DOM tree through parent elements if clicked element is not a link (eg: an image inside a link) */
+		while(el && (typeof el.tagName == 'undefined' || el.tagName.toLowerCase() != 'a' || !el.href)){
+			el = el.parentNode;
+		}
+
+		if(el && el.href){
+			var link = el.href;
+			if(link.indexOf(location.host) == -1 && !link.match(/^javascript\:/i)) {
+				var hitBack = function(link, target){
+					target ? window.open(link, target) : window.location.href = link;
+				};
+				var target = (el.target && !el.target.match(/^_(self|parent|top)$/i)) ? el.target : false;
+				ga(
+					"send", "event", "Exit Link", link,
+					document.location.pathname + document.location.search,
+					{"hitCallback": hitBack(link, target)}
+				);
+
+				event.preventDefault ? event.preventDefault() : event.returnValue = false;
+			}
+		}
+	};
 
 	p.trackTime = function ( category, variable, value, label) {
 		var trackObj = {
