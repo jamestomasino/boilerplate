@@ -134,6 +134,40 @@ been made externally available as a convenience method.
 ```javascript
 var httprequest = NS.createXMLHTTPObject();
 ```
+#### DOM.js ####
+
+`DOM.js` provides some basic cross-browser methods for retrieving and creating
+DOM elements.
+
+##### DOM.create() #####
+
+Pass a string of HTML to this method to create the elements quickly by way of
+createDocumentFragment. Don’t forget to attach the result where you want it,
+though.
+
+```javascript
+var el = DOM.create('<h1>hello world!</h1>');
+document.body.appendChild(el);
+```
+
+##### DOM.find() #####
+
+One of the most obnoxious limitations of working without jQuery is the
+inability to quickly find elements in the DOM. This method helps sort that out.
+
+```javascript
+var elementByID = DOM.find('#someid');
+var elementsByClass = DOM.find('.someclass');
+var elementsByNode = DOM.find(‘li’);
+var elementsByContext DOM.find(‘.someclass’, elementForContext);
+```
+
+To best support older browsers, this method does not try to handle child
+selectors or anything too fancy. It’s faster just to make seperate queries and
+use the result as the context of the next.
+
+Also, IE8 does not support querySelectorAll. Certain queries may generate
+a warning about this fact in the console.
 
 #### Ajax.js ####
 
