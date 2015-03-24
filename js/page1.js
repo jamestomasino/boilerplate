@@ -69,6 +69,8 @@ function page1 () {
 	var Analytics           = NS.use('lib.Analytics');
 	var analytics           = new Analytics ( "UA-18127227-2" );
 
+	analytics.trackEvent ('SampleCategory', 'SampleAction', 'SampleLabel', 1);
+
 	/**********************************************************************/
 	/********************* Application Cache Example **********************/
 	/**********************************************************************/

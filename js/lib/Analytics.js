@@ -6,8 +6,8 @@
 	/*************************************************************************/
 
 	/* This lib is a bit of overkill if you're only using a single analytics
-	 * toolset, like GoogleAnalytics. If you are using multiple, you can
-	 * connect them here and use the same methods to drive each. */
+	* toolset, like GoogleAnalytics. If you are using multiple, you can
+	* connect them here and use the same methods to drive each. */
 
 	var Analytics = function ( google_id ) {
 
@@ -40,7 +40,7 @@
 	var p = Analytics.prototype;
 
 	p.trackTime = function ( category, variable, value, label) {
-		var trackObj {
+		var trackObj = {
 			'timingCategory': category,
 			'timingVar': variable
 		};
@@ -55,14 +55,13 @@
 		var trackObj = {
 			'hitType': 'event',
 			'eventCategory': category,
-			'eventAction': action,
-			{'nonInteraction': 1} // don't trigger bounce rate for events
+			'eventAction': action
 		};
 
 		if (typeof label !== 'undefined') trackObj.eventLabel = label;
 		if (typeof value == 'number' && value >= 0) trackObj.eventValue = value;
 
-		ga('send', trackObj);
+		ga('send', trackObj, {'nonInteraction': 1});
 	};
 
 	var namespace = new NS ( 'lib' );
