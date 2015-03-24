@@ -35,21 +35,14 @@
 		}
 		window.ga('send', 'pageview');
 
-		// Bind exit links
-		this.addEvent(document.body, 'click', this.onBodyClick);
+		// Automatically hijack exit links
+		if (window.addEventListener)
+			document.body.addEventListener("click",this.onBodyClick,false);
+		else
+			document.body.attachEvent("onclick",this.onBodyClick);
 	};
 
 	var p = Analytics.prototype;
-
-	p.addEvent = function(el, eventName, handler) {
-		if (el.addEventListener) {
-			el.addEventListener(eventName, handler);
-		} else {
-			el.attachEvent('on' + eventName, function(){
-				handler.call(el);
-			});
-		}
-	};
 
 	p.onBodyClick = function (event) {
 		var el = event.srcElement || event.target;
