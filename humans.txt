@@ -1,10 +1,7 @@
-/* TEAM */
-	Name: James Tomasino
-	Contact: james (at) tomasino (dot) org
-	Twitter: @mr_ino
-	From: Pennsylvania, USA
+# TEAM
+	James Tomasino - @mr_ino
 
-/* SITE */
+# SITE
 	Language: English
-	Doctype: HTML5
+	Technology: HTML5, CSS3
 	IDE: vim

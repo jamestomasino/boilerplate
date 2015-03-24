@@ -55,10 +55,10 @@ application.
 
 ##### NS.load #####
 
-To use another class or library, use the `NS.load` method. If the external 
-resource hasn't already been loaded, NS will make the necessary ajax request 
-to load the resource and any dependencies. When complete, it will fire the 
-callback function. 
+To use another class or library, use the `NS.load` method. If the external
+resource hasn't already been loaded, NS will make the necessary ajax request to
+load the resource and any dependencies. When complete, it will fire the
+callback function.
 
 ```javascript
 NS.load (['lib.to.Load', 'another.lib.Loading'], callback, scope);
@@ -66,7 +66,7 @@ NS.load (['lib.to.Load', 'another.lib.Loading'], callback, scope);
 
 _This method was added as a result of xHR synchronous loading [being
 deprecated](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Synchronous_and_Asynchronous_Requests#Synchronous_request)
-in the latest JS spec._ 
+in the latest JS spec._
 
 ##### NS.use #####
 
@@ -291,16 +291,73 @@ Views and call direct methods on Models.
 
 ## PHP ##
 
+This boilerplate is designed to use open source technologies, including PHP for
+backend control. There is very standard backend as part of the core
+boilerplate, but there are a few nice utilities.
+
 ### Adaptive Images ###
+
+The [Adaptive Images](http://adaptive-images.com/) utility automatically sizes
+your imagery to minimize bandwidth on smaller devices. By measuring the width
+of the screen/client as the page loads, the backend script automatically
+resizes your image to the appropriate breakpoint. These resized images are
+saved in a cache folder to minimize processing load on the server, and are
+automatically served to the client by way of Apache MOD_REWRITE directives in
+the .htaccess file (see below). The GD lib is used (normally a default module
+installed with PHP) to support the resizing.
+
+To set up adaptive images, all you’ll need to do is tweak the `$resolutions`
+variable inside the `adaptive-images.php` file in the web root. Match these
+resolutions to your CSS breakpoints and everything should just work. If you
+encounter any issues, make sure that the `images-cache` folder (created
+automatically) has forgiving write permissions in order to create the resized
+images. Also, be sure that you are taking advantage of the included `.htaccess`
+file. It is hidden by default in many operating systems and may be easily
+overlooked by FTP clients.
+
 
 - - - - -
 
 ## Server ##
 
 ### .htaccess ###
+
+The included `.htaccess` file performs a number of desirable tasks, including
+the following:
+
+- Rewrites all directory URLs with trailing /’s (for SEO)
+- Supports Adaptive Images (see above)
+- GZip compresses many common MIME-types
+- Sets Access-Control-Allow-Origin directives
+- Defines caching durations and access by type
+- Adds Cache-Control headers
+
 ### robots.txt ###
+
+The `robots.txt` file gives instruction to search engines crawling the site as
+to which content is appropriate to show in search results. By default a number
+of basic directories are excluded, most notably the images folder.
+
+Finally a reference is made to the sitemap file, used most commonly as
+instructions to bots on not only what to spider, but how often to check back.
+
 ### sitemap.xml ###
+
+An example sitemap file is included here illustrating how to list the pages of
+your site, rank them via priority, and set their frequency of change. It is
+much easier to use a [sitemap
+generator](https://code.google.com/p/sitemap-generators/wiki/SitemapGenerators)
+than update this by hand.
+
 ### humans.txt ###
+
+In the style of `robots.txt`, the `[humans.txt](http://humanstxt.org/)` file
+provides information to... humans! There is very little to the [standard
+formatting](http://humanstxt.org/Standard.html) for this file, but it should be
+straight forward and easy to understand for any human that stumbles upon it.
+The format in this project losely follows that of
+[HTML5Boilerplate](https://html5boilerplate.com/humans.txt).
+
 ### favicon.ico ###
 
 - - - - -
