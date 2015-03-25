@@ -13,7 +13,7 @@
 		script.onerror = function(err) {
 			delete window[callbackName];
 			document.body.removeChild(script);
-			errorFunction();
+			errorFunction(err);
 		};
 
 		window[callbackName] = function(data) {
