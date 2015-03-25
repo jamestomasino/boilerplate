@@ -37,6 +37,26 @@
 		return o;
 	};
 
+	DOM.removeClass = function ( el, classname ) {
+		console.log ('dom: ' + el + ' - ' + classname );
+		var targets;
+		if (typeof el === 'string') targets = DOM.find(el);
+		else targets = el;
+
+		if (targets) {
+			var exp1 = /(?:^|\s)/;
+			var exp2 = /(?!\S)/g;
+			var exp  = new RegExp(exp1.source + classname + exp2.source);
+			if (targets.length) {
+				var i=targets.length; while (i--) {
+					targets[i].className = targets[i].className.replace( exp, '' );
+				}
+			} else {
+				targets.className = targets.className.replace( exp, '' );
+			}
+		}
+	};
+
 	var namespace = new NS ( 'lib' );
 	namespace.DOM = DOM;
 
