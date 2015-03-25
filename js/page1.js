@@ -39,7 +39,7 @@ function page1 () {
 	var DOM                 = NS.use('lib.DOM');
 	var wrapperEls          = DOM.find('.wrapper');
 	var mainWrapper         = wrapperEls[0];
-	var DOMtestEl           = DOM.create('<p>Dynamically created tag.</p>');
+	var DOMtestEl           = DOM.create('<p class="dynamic_tag_example">Dynamically created tag.</p>');
 
 	mainWrapper.appendChild(DOMtestEl);
 

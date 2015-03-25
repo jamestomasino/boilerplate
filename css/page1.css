@@ -2,7 +2,7 @@
 
 Table of Contents
 
-	1.0 Basic Page Styles (Line ~22)
+	1.0 Basic Page Styles (Line ~20)
 
 
 Page Structure
@@ -10,11 +10,9 @@ Page Structure
 	1. Body
 		2. Background / .bg
 		3. Wrapper / .wrapper
-			3.1. Data Bind Sample Output / .sample_div
-			3.2. Data Bind Sample Input / .sample_input
-			3.2. Exit Link Paragraph / p
-				3.2.1. Exit Link Example / a
-			3.3. Generated P tag / p
+			3.1. Data Binding Example / .data_bind_example
+			3.2. Exit Link Example / .exit_link_example
+			3.3. Dynamic Tag Example / .dynamic_tag_example
 
 ========================================================================== */
 
