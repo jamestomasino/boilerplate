@@ -22,12 +22,20 @@ remain the style and structure of the website.
       - [NS.createXMLHTTPObject](#nscreatexmlhttpobject)
     - [Ajax.js](#ajaxjs)
       - [new Ajax()](#new-ajax)
+    - [Analytics.js](#analyticsjs)
+      - [new Analytics()](#new-analytics)
+      - [Analytics.trackEvent()](#analyticstrackevent)
+      - [Analytics.trackTime()](#analyticstracktime)
+    - [Bind.js](#bindjs)
+    - [DOM.js](#domjs)
+      - [DOM.create()](#domcreate)
+      - [DOM.find()](#domfind)
+    - [Delegate.js](#delegatejs)
     - [Events.js](#eventsjs)
       - [Events.subscribe](#eventssubscribe)
       - [Events.unsubscribe](#eventsunsubscribe)
       - [Events.trigger](#eventstrigger)
-    - [Delegate.js](#delegatejs)
-    - [Bind.js](#bindjs)
+    - [Storage.js](#storagejs)
   - [App](#app)
     - [Model](#model)
     - [View](#view)
@@ -134,40 +142,6 @@ been made externally available as a convenience method.
 ```javascript
 var httprequest = NS.createXMLHTTPObject();
 ```
-#### DOM.js ####
-
-`DOM.js` provides some basic cross-browser methods for retrieving and creating
-DOM elements.
-
-##### DOM.create() #####
-
-Pass a string of HTML to this method to create the elements quickly by way of
-createDocumentFragment. Don't forget to attach the result where you want it,
-though.
-
-```javascript
-var el = DOM.create('<h1>hello world!</h1>');
-document.body.appendChild(el);
-```
-
-##### DOM.find() #####
-
-One of the most obnoxious limitations of working without jQuery is the
-inability to quickly find elements in the DOM. This method helps sort that out.
-
-```javascript
-var elementByID = DOM.find('#someid');
-var elementsByClass = DOM.find('.someclass');
-var elementsByNode = DOM.find('li' );
-var elementsByContext DOM.find('.someclass', elementForContext);
-```
-
-To best support older browsers, this method does not try to handle child
-selectors or anything too fancy. It's faster just to make seperate queries and
-use the result as the context of the next.
-
-Also, IE8 does not support querySelectorAll. Certain queries may generate
-a warning about this fact in the console.
 
 #### Ajax.js ####
 
@@ -187,6 +161,7 @@ If a readyState of 4 and request status of 200 are received, your callback
 function will be executed. Otherwise the error function will be called.
 
 _Note: calling Ajax without the new keyword will throw errors._
+
 
 #### Analytics.js ####
 
@@ -230,15 +205,92 @@ analytics.trackTime( category, variable, value, label );
 
 Value and label are optional parameters.
 
-#### Storage.js ####
 
-`Storage.js` is a localstorage wrapper. It supports JSON processing of objects
-being stored and retreived. This static class has a getter and setter property.
+#### Bind.js ####
+
+Bidirectional data binding is made available through the `Bind` class.
+Instantiating an instance of this class requires a single id parameter. This ID
+will connect to one or more `data-bind-*` properties in the DOM.
 
 ```javascript
-var value = Storage.get('someid');
-Storage.set('someid', someValue);
+var bindsample = new Bind('bindsample');
+// Relates to elements with the attribute "data-bind-bindsample"
 ```
+
+Any `change` events fired by that element will automatically update the data in
+the Bind instance's attributes list. Likewise, any change to the Bind
+instance's attributes will propgate to the DOM.
+
+Setting or getting an instance's attributes is done via the `set` and `get`
+methods.
+
+```javascript
+bindsample.set('propname', 'samplevalue');
+```
+
+The above example will update the value or innerHTML of any elements with the
+appropriate attribute, like the following example:
+
+```html
+	<div data-bind-bindsample="propname"></div>
+```
+
+Properties values are updated or inserted into these DOM elements via
+innerHTML, or value if they are input, textarea, or select types.
+
+
+#### DOM.js ####
+
+`DOM.js` provides some basic cross-browser methods for retrieving and creating
+DOM elements.
+
+##### DOM.create() #####
+
+Pass a string of HTML to this method to create the elements quickly by way of
+createDocumentFragment. Don't forget to attach the result where you want it,
+though.
+
+```javascript
+var el = DOM.create('<p>hello world!</p>');
+document.body.appendChild(el);
+```
+
+##### DOM.find() #####
+
+One of the most obnoxious limitations of working without jQuery is the
+inability to quickly find elements in the DOM. This method helps sort that out.
+
+```javascript
+var elementByID = DOM.find('#someid');
+var elementsByClass = DOM.find('.someclass');
+var elementsByNode = DOM.find('li' );
+var elementsByContext DOM.find('.someclass', elementForContext);
+```
+
+To best support older browsers, this method does not try to handle child
+selectors or anything too fancy. It's faster just to make seperate queries and
+use the result as the context of the next.
+
+Also, IE8 does not support querySelectorAll. Certain queries may generate
+a warning about this fact in the console.
+
+
+#### Delegate.js ####
+
+`Delegate.js` is a very simple wrapper that enables a global function called
+`Delegate`, which proxies the context of `this` in a function. When using
+class-based structures, it's useant to maintain class scope in event
+listener callbacks, especially on the DOM.
+
+```javascript
+// create a delegate function maintaining scope
+var c = Delegate(callbackFunc, this);
+
+// examples of using that function
+Event.subscribe ('SOME_EVENT', c);
+Event.unsubscribe ('SOME_EVENT', c);
+```
+
 
 #### Events.js ####
 
@@ -288,53 +340,17 @@ The context value will set the scope of `this` in the callback function. Please
 note this could have strange consequences if you've proxied the callback
 function.
 
-#### Delegate.js ####
 
-`Delegate.js` is a very simple wrapper that enables a global function called
-`Delegate`, which proxies the context of `this` in a function. When using
-class-based structures, it's useant to maintain class scope in event
-listener callbacks, especially on the DOM.
+#### Storage.js ####
 
-```javascript
-// create a delegate function maintaining scope
-var c = Delegate(callbackFunc, this);
-
-// examples of using that function
-Event.subscribe ('SOME_EVENT', c);
-Event.unsubscribe ('SOME_EVENT', c);
-```
-
-#### Bind.js ####
-
-Bidirectional data binding is made available through the `Bind` class.
-Instantiating an instance of this class requires a single id parameter. This ID
-will connect to one or more `data-bind-*` properties in the DOM.
+`Storage.js` is a localstorage wrapper. It supports JSON processing of objects
+being stored and retreived. This static class has a getter and setter property.
 
 ```javascript
-var bindsample = new Bind('bindsample');
-// Relates to elements with the attribute "data-bind-bindsample"
+var value = Storage.get('someid');
+Storage.set('someid', someValue);
 ```
 
-Any `change` events fired by that element will automatically update the data in
-the Bind instance's attributes list. Likewise, any change to the Bind
-instance's attributes will propgate to the DOM.
-
-Setting or getting an instance's attributes is done via the `set` and `get`
-methods.
-
-```javascript
-bindsample.set('propname', 'samplevalue');
-```
-
-The above example will update the value or innerHTML of any elements with the
-appropriate attribute, like the following example:
-
-```html
-	<div data-bind-bindsample="propname"></div>
-```
-
-Properties values are updated or inserted into these DOM elements via
-innerHTML, or value if they are input, textarea, or select types.
 
 ### App ###
 
