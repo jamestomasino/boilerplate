@@ -1,3 +1,26 @@
+/* =============================================================================
+
+Table of Contents
+
+	1.0 Basic Page Styles (Line ~22)
+
+
+Page Structure
+
+	1. Body
+		2. Background / .bg
+		3. Wrapper / .wrapper
+			3.1. Data Bind Sample Output / .sample_div
+			3.2. Data Bind Sample Input / .sample_input
+			3.2. Exit Link Paragraph / p
+				3.2.1. Exit Link Example / a
+			3.3. Generated P tag / p
+
+========================================================================== */
+
+/* =============================================================================
+   1.0 Basic Page Styles
+   ========================================================================== */
 .bg {
 	display: block;
 	position: absolute;
