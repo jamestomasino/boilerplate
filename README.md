@@ -491,7 +491,7 @@ than update this by hand.
 
 ### humans.txt ###
 
-In the style of `robots.txt`, the `[humans.txt](http://humanstxt.org/)` file
+In the style of `robots.txt`, the [humans.txt](http://humanstxt.org/) file
 provides information to... humans! There is very little to the [standard
 formatting](http://humanstxt.org/Standard.html) for this file, but it should be
 straight forward and easy to understand for any human that stumbles upon it.
