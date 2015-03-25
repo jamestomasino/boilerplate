@@ -37,8 +37,19 @@
 		return o;
 	};
 
+	DOM.remove = function ( el ) {
+		el = (typeof el === 'string') ? DOM.find(el) : el;
+		if (el) {
+			if (el.length) {
+				var i = el.length; while (i--);
+				el[i].parentNode.removeChild(el[i]);
+			} else {
+				el.parentNode.removeChild(el);
+			}
+		}
+	};
+
 	DOM.removeClass = function ( el, classname ) {
-		console.log ('dom: ' + el + ' - ' + classname );
 		var targets;
 		if (typeof el === 'string') targets = DOM.find(el);
 		else targets = el;
