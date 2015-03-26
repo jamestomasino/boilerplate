@@ -1,4 +1,4 @@
-(function () {
+(function (NS) {
 
 	var DOM = {};
 
@@ -24,7 +24,7 @@
 	DOM.find = function( a, b ){
 		var c = a.match(/^(\W)?(.*)/);
 		var o;
-		var select = "getElement" + ( c[1] ? c[1] == "#" ? "ById" : "sByClassName" : "sByTagName");
+		var select = "getElement" + ( c[1] ? c[1] === "#" ? "ById" : "sByClassName" : "sByTagName");
 
 		if (select === "getElementsByClassName" && ! document.getElementsByClassName) {
 			o = ( b || document )["querySelectorAll"]( a );
@@ -71,11 +71,11 @@
 		if (el) {
 			if (el.length) {
 				var i=el.length; while (i--) {
-					if (el[i].className.indexOf(classname) == -1)
+					if (el[i].className.indexOf(classname) === -1)
 						el[i].className = (el[i].className === "") ? classname : el[i].className + " " + classname;
 				}
 			} else {
-				if (el.className.indexOf(classname) == -1)
+				if (el.className.indexOf(classname) === -1)
 					el.className = (el.className === "") ? classname : el.className + " " + classname;
 			}
 		}
@@ -84,4 +84,4 @@
 	var namespace = new NS ( 'lib' );
 	namespace.DOM = DOM;
 
-})();
+})(window.NS);

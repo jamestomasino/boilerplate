@@ -1,7 +1,5 @@
-(function(window, doc){
+(function(NS){
 	"use strict";
-
-	NS.load ( ['lib.Delegate'], classWrapper, this );
 
 	function classWrapper() {
 
@@ -66,26 +64,19 @@
 			switch (this.appCache.status) {
 				case this.appCache.UNCACHED: // UNCACHED == 0
 					return 'UNCACHED';
-					break;
 				case this.appCache.IDLE: // IDLE == 1
-						return 'IDLE';
-					break;
+					return 'IDLE';
 				case this.appCache.CHECKING: // CHECKING == 2
-						return 'CHECKING';
-					break;
+					return 'CHECKING';
 				case this.appCache.DOWNLOADING: // DOWNLOADING == 3
-						return 'DOWNLOADING';
-					break;
+					return 'DOWNLOADING';
 				case this.appCache.UPDATEREADY:  // UPDATEREADY == 4
-						return 'UPDATEREADY';
-					break;
+					return 'UPDATEREADY';
 				case this.appCache.OBSOLETE: // OBSOLETE == 5
-						return 'OBSOLETE';
-					break;
+					return 'OBSOLETE';
 				default:
-						return 'UKNOWN CACHE STATUS';
-					break;
-			};
+					return 'UKNOWN CACHE STATUS';
+			}
 		};
 
 		p.update = function () {
@@ -100,4 +91,6 @@
 		namespace.AppCache = AppCache;
 	}
 
-})(window, document);
+	NS.load ( ['lib.Delegate'], classWrapper, this );
+
+})(window.NS);

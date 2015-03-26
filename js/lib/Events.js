@@ -1,4 +1,4 @@
-(function(){
+(function(NS){
 	"use strict";
 
 	var eventSubscribers = {}, logEvents = false, logIgnoredEvents = [];
@@ -108,4 +108,4 @@
 		}
 	};
 
-})();
+})(window.NS);

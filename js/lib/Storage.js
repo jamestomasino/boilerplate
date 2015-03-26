@@ -1,4 +1,4 @@
-(function () {
+(function (NS) {
 
 	// Usage:
 	// Storage.get('someid');
@@ -20,9 +20,9 @@
 			get: function( key ) { return },
 			set: function( key, data ) { return }
 		};
-	};
+	}
 
 	var namespace = new NS ( 'lib' );
 	namespace.Storage = Storage;
 
-})();
+})(window.NS);
