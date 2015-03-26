@@ -168,11 +168,11 @@ _Note: calling Ajax without the new keyword will throw errors._
 `Analytics.js` is a skeletal structure designed to wrap and centralize your
 website analytics calls. By default it is configured to use Google Analytics.
 In its present form it does little but wrap that functionality into a class
-structure. 
+structure.
 
 This class shines best when you have other types of metrics being collected.
 Combining these calls into a single class saves time and makes the code more
-readable. 
+readable.
 
 The `Analytics.js` class automatically hijacks exit links and adds event tracking.
 
