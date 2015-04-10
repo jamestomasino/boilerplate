@@ -1,13 +1,6 @@
 // Set the global path to javascript files for NS
+var NS = window.NS;
 NS.baseURL = 'js/';
-
-// List all page dependencies
-var libs = ['app.model.SampleModel', 'app.controller.SampleController',
-	'app.view.SampleView', 'lib.Bind', 'lib.DOM', 'lib.Storage', 'lib.Events',
-	'lib.Analytics', 'lib.AppCache' ];
-
-// Load all page dependencies and initiate page setup via callback
-NS.load ( libs, page1, this);
 
 // Page level callback
 function page1 () {
@@ -80,4 +73,12 @@ function page1 () {
 	var AppCache            = NS.use('lib.AppCache');
 	var appCacheMediator    = new AppCache();
 }
+
+// List all page dependencies
+var libs = ['app.model.SampleModel', 'app.controller.SampleController',
+	'app.view.SampleView', 'lib.Bind', 'lib.DOM', 'lib.Storage', 'lib.Events',
+	'lib.Analytics', 'lib.AppCache' ];
+
+// Load all page dependencies and initiate page setup via callback
+NS.load ( libs, page1, this);
 
