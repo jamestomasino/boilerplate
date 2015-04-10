@@ -7,8 +7,8 @@
 		};
 	}
 
-	var matcheach = /\{\{\s*\#each\s*(.*?)\}\}(.*)\{{\/\s*each\s*\1\}\}/ig;
-	var matchpre = /\{\{\s*(this.)?/;
+	var matcheach = /\{\{\s*\#each\s*(.*?)\}\}(.*)\{{\s*\/\s*each\s*\1\}\}/ig;
+	var matchpre = /\{\{\s*/;
 	var matchsuf = /\s*\}\}/;
 
 	function t(template,data) {
@@ -41,7 +41,7 @@
 				var patterns = [];
 				var results = [];
 				while (each.length) {
-					keys.push( each.shift().replace(/this\./, ''));
+					keys.push( each.shift() );
 					patterns.push ( each.shift() );
 				}
 				for (var i=0; i < keys.length; i++) {
