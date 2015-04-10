@@ -1,7 +1,5 @@
-(function(){
+(function(NS){
 	"use strict";
-
-	NS.load ( ['lib.Events', 'lib.Delegate', 'app.model.CONST'], classWrapper, this);
 
 	function classWrapper () {
 
@@ -58,7 +56,6 @@
 
 	}
 
-})();
+	NS.load ( ['lib.Events', 'lib.Delegate', 'app.model.CONST'], classWrapper, this);
 
-
-
+})(window.NS);

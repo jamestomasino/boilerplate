@@ -1,7 +1,5 @@
-(function(){
+(function(NS){
 	"use strict";
-
-	NS.load ( ['lib.Delegate', 'lib.Events', 'app.model.CONST'], classWrapper, this);
 
 	function classWrapper () {
 		//---------------------------------------------------------------
@@ -48,7 +46,7 @@
 		 */
 		p._onSampleUIEvent = function (e) {
 			console.log ( 'SampleController::onSampleUIEvent');
-			model.sampleMethod();
+			this.model.sampleMethod();
 		};
 
 
@@ -57,4 +55,6 @@
 
 	}
 
-})();
+	NS.load ( ['lib.Delegate', 'lib.Events', 'app.model.CONST'], classWrapper, this);
+
+})(window.NS);

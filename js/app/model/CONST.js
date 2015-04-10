@@ -1,4 +1,4 @@
-(function(){
+(function(NS){
 	"use strict";
 
 	var CONST = {};
@@ -21,4 +21,4 @@
 	var namespace = new NS ( 'app.model' );
 	namespace.CONST = CONST;
 
-})();
+})(window.NS);
