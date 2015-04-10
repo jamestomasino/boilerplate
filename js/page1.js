@@ -107,4 +107,3 @@ var libs = ['app.model.SampleModel', 'app.controller.SampleController',
 
 // Load all page dependencies and initiate page setup via callback
 NS.load ( libs, page1, this);
-

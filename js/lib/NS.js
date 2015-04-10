@@ -1,4 +1,4 @@
-(function() {
+(function(window) {
 	(function() {
 		if (!window.console) {
 			window.console = {};
@@ -29,7 +29,7 @@
 		return parent;
 	}
 
-	NS.global = (function(){ return this || (1,eval)('this') })();
+	NS.global = window;
 	NS.baseURL = '';
 
 	// Loading Process Sequence
@@ -141,6 +141,8 @@
 
 		if (NS.queue.length) {
 			NS.processQueue();
+		} else if (NS.loading.length) {
+			return;
 		} else if (NS.loaded.length) {
 			NS.processLoaded();
 		} else if (NS.callbacks.length) {
@@ -219,4 +221,4 @@
 
 	NS.global.NS = NS;
 
-})();
+})(window);
