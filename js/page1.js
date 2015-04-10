@@ -72,12 +72,38 @@ function page1 () {
 	// This boilerprate is not configured with AppCache, so this does nada.
 	var AppCache            = NS.use('lib.AppCache');
 	var appCacheMediator    = new AppCache();
+
+	/**********************************************************************/
+	/************************* Template Example ***************************/
+	/**********************************************************************/
+
+	// Requires that a proper manifest be added to the html page.
+	// This boilerprate is not configured with AppCache, so this does nada.
+	var Template            = NS.use('lib.Template');
+
+	var templateExample     = '<p id="{{ id }}">{{ content.text }}</p> <ul> {{#each item}} <li>{{ label }}</li> {{/each item}} </ul>';
+	var templateData        = { "id": "templateTest",
+                                "content" : {
+                                  "text" : "template text example"
+                                },
+								"item" : [
+									{ "label" : "item 1" },
+									{ "label" : "item 2" },
+									{ "label" : "item 3" },
+									{ "label" : "item 4" },
+									{ "label" : "item 5" },
+									{ "label" : "item 6" }
+								]
+                              };
+	var renderedTemplate    = Template(templateExample, templateData);
+	var renderedHTML        = DOM.create(renderedTemplate);
+	mainWrapper.appendChild(renderedHTML);
 }
 
 // List all page dependencies
 var libs = ['app.model.SampleModel', 'app.controller.SampleController',
 	'app.view.SampleView', 'lib.Bind', 'lib.DOM', 'lib.Storage', 'lib.Events',
-	'lib.Analytics', 'lib.AppCache' ];
+	'lib.Analytics', 'lib.AppCache', 'lib.Template' ];
 
 // Load all page dependencies and initiate page setup via callback
 NS.load ( libs, page1, this);
