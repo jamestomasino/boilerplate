@@ -1,7 +1,5 @@
-(function(){
+(function(NS){
 	"use strict";
-
-	NS.load ( ['lib.Delegate', 'lib.Events'], classWrapper, this );
 
 	function classWrapper() {
 
@@ -94,7 +92,8 @@
 
 		var namespace = new NS ('lib');
 		namespace.Bind = Bind;
-
 	}
 
-})();
+	NS.load ( ['lib.Delegate', 'lib.Events'], classWrapper, this );
+
+})(window.NS);

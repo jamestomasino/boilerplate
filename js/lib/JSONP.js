@@ -1,4 +1,4 @@
-(function () {
+(function (NS) {
 	"use strict"
 
 	/*
@@ -29,4 +29,4 @@
 	var namespace = new NS ( 'lib' );
 	namespace.JSONP = JSONP;
 
-})();
+})(window.NS);
