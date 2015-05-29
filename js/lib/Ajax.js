@@ -8,7 +8,7 @@
 		function Ajax(url, callbackFunction, errorFunction)
 		{
 			this.stateChange = function (object) {
-				if (this.request.readyState===4)
+				if (this.request.readyState === 4)
 					if (this.request.status === 200) {
 						this.callbackFunction(this.request.responseText);
 					} else {

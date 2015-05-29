@@ -56,11 +56,10 @@
 			var link = el.href;
 			if(link.indexOf(location.host) === -1 && !link.match(/^javascript\:/i)) {
 				var hitBack = function(link, target){
-					if (target) {
-						window.open(link, target);
-					} else {
+					if (target)
+						window.open(link, target)
+					else
 						window.location.href = link;
-					}
 				};
 				var target = (el.target && !el.target.match(/^_(self|parent|top)$/i)) ? el.target : false;
 				window.ga(
@@ -69,11 +68,10 @@
 					{"hitCallback": hitBack(link, target)}
 				);
 
-				if (event.preventDefault) {
-					event.preventDefault();
-				} else {
+				if (event.preventDefault)
+					event.preventDefault()
+				else
 					event.returnValue = false;
-				}
 			}
 		}
 	};
