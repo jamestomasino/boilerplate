@@ -69,8 +69,6 @@ function page1 () {
 	/************************* Template Example ***************************/
 	/**********************************************************************/
 
-	// Requires that a proper manifest be added to the html page.
-	// This boilerprate is not configured with AppCache, so this does nada.
 	var Template            = NS.use('lib.Template');
 
 	var templateExample     = '<p id="{{ id }}">{{ content.text }}</p> <ul> {{#each item}} <li>{{ label }}</li> {{/each item}} </ul>';
@@ -78,14 +76,14 @@ function page1 () {
                                 "content" : {
                                   "text" : "template text example"
                                 },
-								"item" : [
-									{ "label" : "item 1" },
-									{ "label" : "item 2" },
-									{ "label" : "item 3" },
-									{ "label" : "item 4" },
-									{ "label" : "item 5" },
-									{ "label" : "item 6" }
-								]
+                                "item" : [
+                                  { "label" : "item 1" },
+                                  { "label" : "item 2" },
+                                  { "label" : "item 3" },
+                                  { "label" : "item 4" },
+                                  { "label" : "item 5" },
+                                  { "label" : "item 6" }
+                                ]
                               };
 	var renderedTemplate    = Template(templateExample, templateData);
 	var renderedHTML        = DOM.create(renderedTemplate);
