@@ -30,11 +30,15 @@ remain the style and structure of the website.
     - [DOM.js](#domjs)
       - [DOM.create()](#domcreate)
       - [DOM.find()](#domfind)
+      - [DOM.remove()](#domremove)
+      - [DOM.removeClass()](#domremoveclass)
+      - [DOM.addClass()](#domaddclass)
     - [Delegate.js](#delegatejs)
     - [Events.js](#eventsjs)
       - [Events.subscribe](#eventssubscribe)
       - [Events.unsubscribe](#eventsunsubscribe)
       - [Events.trigger](#eventstrigger)
+	- [JSONP.js](#jsonpjs)
     - [Storage.js](#storagejs)
   - [App](#app)
     - [Model](#model)
@@ -168,11 +172,11 @@ _Note: calling Ajax without the new keyword will throw errors._
 `Analytics.js` is a skeletal structure designed to wrap and centralize your
 website analytics calls. By default it is configured to use Google Analytics.
 In its present form it does little but wrap that functionality into a class
-structure. 
+structure.
 
 This class shines best when you have other types of metrics being collected.
 Combining these calls into a single class saves time and makes the code more
-readable. 
+readable.
 
 The `Analytics.js` class automatically hijacks exit links and adds event tracking.
 
@@ -219,7 +223,7 @@ var bindsample = new Bind('bindsample');
 
 Any `change` events fired by that element will automatically update the data in
 the Bind instance's attributes list. Likewise, any change to the Bind
-instance's attributes will propgate to the DOM.
+instance's attributes will propagate to the DOM.
 
 Setting or getting an instance's attributes is done via the `set` and `get`
 methods.
@@ -268,18 +272,59 @@ var elementsByContext DOM.find('.someclass', elementForContext);
 ```
 
 To best support older browsers, this method does not try to handle child
-selectors or anything too fancy. It's faster just to make seperate queries and
+selectors or anything too fancy. It's faster just to make separate queries and
 use the result as the context of the next.
 
 Also, IE8 does not support querySelectorAll. Certain queries may generate
 a warning about this fact in the console.
 
+##### DOM.remove() #####
+
+Instead of finding and returning a DOM element, you can remove it with this
+method. You can use the remove method with the same limitations and examples as
+the find method, or you can remove an element directly by passing the DOM
+reference.
+
+```javascript
+// Remove a direct reference to a DOM element
+var elementByID = DOM.find('#someid');
+DOM.remove(elementByID);
+
+// Remove combined with the built-in find
+DOM.remove('#someid');
+```
+
+##### DOM.removeClass() #####
+
+Removes a class from a DOM element.
+
+```javascript
+// Remove a class by direct reference to a DOM element
+var elementByID = DOM.find('#someid');
+DOM.removeClass(elementByID, 'someclass');
+
+// Remove a class with the built-in find
+DOM.removeClass('#someid', 'someclass');
+```
+
+##### DOM.addClass() #####
+
+Adds a class to a DOM element.
+
+```javascript
+// Add a class by direct reference to a DOM element
+var elementByID = DOM.find('#someid');
+DOM.addClass(elementByID, 'someclass');
+
+// Add a class with built-in find
+DOM.addClass('#someid', 'someclass');
+```
 
 #### Delegate.js ####
 
 `Delegate.js` is a very simple wrapper that enables a global function called
 `Delegate`, which proxies the context of `this` in a function. When using
-class-based structures, it's useant to maintain class scope in event
+class-based structures, it's used to maintain class scope in event
 listener callbacks, especially on the DOM.
 
 ```javascript
@@ -340,11 +385,18 @@ The context value will set the scope of `this` in the callback function. Please
 note this could have strange consequences if you've proxied the callback
 function.
 
+#### JSONP.js ####
+
+`JSONP.js` is a microlibrary to support basic JSONP requests. Ajax can't be used to handle JSON requests across domains, but JSONP can get the job done. The implementation is quite different, and this lib sorts it all out in a cross-browser way. The usage below is self explanatory.
+
+```javascript
+jsonp('http://www.helloword.com/something.json', callback, error);
+```
 
 #### Storage.js ####
 
 `Storage.js` is a localstorage wrapper. It supports JSON processing of objects
-being stored and retreived. This static class has a getter and setter property.
+being stored and retrieved. This static class has a getter and setter property.
 
 ```javascript
 var value = Storage.get('someid');
@@ -430,7 +482,7 @@ Views and call direct methods on Models.
 ## PHP ##
 
 This boilerplate is designed to use open source technologies, including PHP for
-backend control. There is very standard backend as part of the core
+backend control. There is very little standard backend as part of the core
 boilerplate, but there are a few nice utilities.
 
 ### Adaptive Images ###

@@ -3,5 +3,5 @@
 
 # SITE
 	Language: English
-	Technology: HTML5, CSS3
+	Technology: HTML5, CSS3, JavaScript
 	IDE: vim
