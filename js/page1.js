@@ -4,7 +4,7 @@ NS.baseURL = 'js/';
 // List all page dependencies
 var libs = ['app.model.SampleModel', 'app.controller.SampleController',
 	'app.view.SampleView', 'lib.Bind', 'lib.DOM', 'lib.Storage', 'lib.Events',
-	'lib.Analytics', 'lib.AppCache' ];
+	'lib.Analytics'];
 
 // Load all page dependencies and initiate page setup via callback
 NS.load ( libs, page1, this);
@@ -71,13 +71,5 @@ function page1 () {
 
 	analytics.trackEvent ('SampleCategory', 'SampleAction', 'SampleLabel', 1);
 
-	/**********************************************************************/
-	/********************* Application Cache Example **********************/
-	/**********************************************************************/
-
-	// Requires that a proper manifest be added to the html page.
-	// This boilerprate is not configured with AppCache, so this does nada.
-	var AppCache            = NS.use('lib.AppCache');
-	var appCacheMediator    = new AppCache();
 }
 
