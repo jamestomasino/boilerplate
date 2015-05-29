@@ -482,7 +482,7 @@ Views and call direct methods on Models.
 ## PHP ##
 
 This boilerplate is designed to use open source technologies, including PHP for
-backend control. There is very standard backend as part of the core
+backend control. There is very little standard backend as part of the core
 boilerplate, but there are a few nice utilities.
 
 ### Adaptive Images ###
