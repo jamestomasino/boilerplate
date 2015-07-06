@@ -1,5 +1,4 @@
 // Set the global path to javascript files for NS
-var NS = window.NS;
 NS.baseURL = 'js/';
 
 // Page level callback
