@@ -88,12 +88,23 @@ function page1 () {
 	var renderedTemplate    = Template(templateExample, templateData);
 	var renderedHTML        = DOM.create(renderedTemplate);
 	mainWrapper.appendChild(renderedHTML);
+
+
+	/**********************************************************************/
+	/*************************** Draw Example *****************************/
+	/**********************************************************************/
+
+	var Draw = NS.use('lib.Draw');
+	var drawEl = DOM.find('.draw_example')[0];
+
+	var line = Draw.line(0,100,100,0);
+	drawEl.appendChild(line);
 }
 
 // List all page dependencies
 var libs = ['app.model.SampleModel', 'app.controller.SampleController',
 	'app.view.SampleView', 'lib.Bind', 'lib.DOM', 'lib.Storage', 'lib.Events',
-	'lib.Analytics', 'lib.Template' ];
+	'lib.Analytics', 'lib.Template', 'lib.Draw' ];
 
 // Load all page dependencies and initiate page setup via callback
 NS.load ( libs, page1, this);
