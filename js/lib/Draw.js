@@ -11,6 +11,13 @@
 	//		border-width: 1px 0px 0px 0px;
 	//		border-style: solid;
 	//		border-color: #666;
+	//		transform: translateZ(1px);
+	//		-webkit-backface-visibility: hidden;
+	//		-moz-backface-visibility: hidden;
+	//		-ms-backface-visibility: hidden;
+	//		-o-backface-visibility: hidden;
+	//		backface-visibility: hidden;
+
 
 	Draw.line = function (x1, y1, x2, y2)	{
 		var isIE = navigator.userAgent.indexOf("MSIE") > -1;
