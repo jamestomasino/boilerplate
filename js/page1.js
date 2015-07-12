@@ -1,4 +1,5 @@
 // Set the global path to javascript files for NS
+/*global NS*/
 NS.baseURL = 'js/';
 
 // Page level callback
@@ -105,5 +106,11 @@ var libs = ['app.model.SampleModel', 'app.controller.SampleController',
 	'app.view.SampleView', 'lib.Bind', 'lib.DOM', 'lib.Storage', 'lib.Events',
 	'lib.Analytics', 'lib.Template', 'lib.Draw' ];
 
+// Support for feature-detection based polyfills!
+var polyfills = [];
+if (!document.addEventListener) {
+	polyfills.push("polyfill.addEventListener");
+}
+
 // Load all page dependencies and initiate page setup via callback
-NS.load ( libs, page1, this);
+NS.load ( libs.concat(polyfills), page1, this);
