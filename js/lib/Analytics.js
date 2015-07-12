@@ -33,13 +33,12 @@
 		} else {
 			window.ga('create', google_id);
 		}
+		window.ga('require', 'displayfeatures');
+		window.ga('require', 'linkid', 'linkid.js');
 		window.ga('send', 'pageview');
 
 		// Automatically hijack exit links
-		if (window.addEventListener)
-			document.body.addEventListener("click",this.onBodyClick,false);
-		else
-			document.body.attachEvent("onclick",this.onBodyClick);
+		document.body.addEventListener("click",this.onBodyClick,false);
 	};
 
 	var p = Analytics.prototype;
