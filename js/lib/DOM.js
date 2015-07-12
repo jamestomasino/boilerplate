@@ -75,9 +75,26 @@
 						el[i].className = (el[i].className === "") ? classname : el[i].className + " " + classname;
 				}
 			} else {
-				if (el.className.indexOf(classname) === -1)
+				if (!el.className || (el.className && el.className.indexOf(classname) === -1))
 					el.className = (el.className === "") ? classname : el.className + " " + classname;
 			}
+		}
+	}
+
+	DOM.hasClass = function (el, classname) {
+		el = (typeof el === 'string') ? DOM.find(el) : el;
+		if (el) {
+			var selector = " " + classname + " ";
+			return ( (" " + el.className + " ").replace(/[\n\t]/g, " ").indexOf(selector) > -1 )
+		}
+		return false;
+	}
+
+	DOM.toggleClass = function ( el, classname ) {
+		if ( DOM.hasClass(el, classname) ) {
+			DOM.removeClass(el, classname);
+		} else {
+			DOM.addClass(el, classname);
 		}
 	}
 
