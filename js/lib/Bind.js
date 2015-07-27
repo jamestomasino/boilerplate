@@ -84,6 +84,16 @@
 		namespace.Bind = Bind;
 	}
 
-	NS.load ( ['lib.Delegate', 'lib.Events'], classWrapper, this );
+	var libs = [
+		'lib.Delegate',
+		'lib.Events' ]
+
+	var polyfills = [];
+
+	if (!document.addEventListener) {
+		polyfills.push("polyfill.addEventListener");
+	}
+
+	NS.load ( libs.concat(polyfills), classWrapper, this );
 
 })(window.NS);
