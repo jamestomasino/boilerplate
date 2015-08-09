@@ -1,10 +1,7 @@
 (function(NS){
 	"use strict";
 
-	var libs = [];
-	var polyfills = [];
-
-	NS('app.model.CONST', libs.concat(polyfills), function(){
+	NS('app.model.CONST', [], function(){
 
 		var CONST = {};
 

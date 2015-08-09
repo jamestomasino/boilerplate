@@ -1,10 +1,13 @@
 (function(NS){
 	"use strict";
 
-	var libs = ['lib.Events', 'lib.Ajax', 'lib.Delegate', 'app.model.CONST']
-	var polyfills = [];
+	var libs = [
+		'lib.Events',
+		'lib.Ajax',
+		'lib.Delegate',
+		'app.model.CONST'];
 
-	NS ( 'app.model.SampleModel', libs.concat(polyfills), function(){
+	NS ( 'app.model.SampleModel', libs, function(){
 
 		//---------------------------------------------------------------
 		//------------------ Global Vars and Libs -----------------------

@@ -5,9 +5,8 @@
 		'lib.Events',
 		'lib.Delegate',
 		'app.model.CONST'];
-	var polyfills = [];
 
-	NS ('app.view.SampleView', libs.concat(polyfills), function(){
+	NS ('app.view.SampleView', libs, function(){
 
 		//---------------------------------------------------------------
 		//------------------ Global Vars and Libs -----------------------
