@@ -428,6 +428,10 @@ transform: translateZ(1px);
 backface-visibility: hidden;
 ```
 
+#### Easing.js ####
+
+`Easing.js` adds a few easing methods onto the Math object.
+
 #### Events.js ####
 
 `Events.js` is a simple subscriber that allows for a basic global messaging
@@ -484,6 +488,38 @@ function.
 jsonp('http://www.helloword.com/something.json', callback, error);
 ```
 
+#### Prefix.js ####
+
+It can be a pain to detect which prefix to use in CSS when developing without build tools.
+
+##### Prefix.hasStyle () #####
+
+Determines if the browser supports one of the css selectors in the list. Returns bool.
+
+```javascript
+var hasTransition = Prefix.hasStyle('transition WebkitTransition MozTransition MsTransition OTransition');
+```
+
+##### Prefix.getStyle () #####
+
+Returns the browser supported css selector in the list provided. Returns matching string or null.
+
+```javascript
+var transition = Prefix.getStyle('transition WebkitTransition MozTransition MsTransition OTransition');
+```
+
+#### ScrollTo.js ####
+
+`ScrollTo.js` provides a way to smoothly animate the page scroll to a new
+position with custom easing and callback methods.
+
+```javascript
+//ScrollTo(to, callback, duration, easing);
+ScrollTo(0); // scrolls to top of page using default easing
+ScrollTo(elRect.top.toString(), doneAnimating); // Scrolls to bounding rect of object then calls callback
+ScrollTo(0, null, customEasingMethod); // define your own easing method
+```
+
 #### Storage.js ####
 
 `Storage.js` is a localstorage wrapper. It supports JSON processing of objects
@@ -494,6 +530,30 @@ var value = Storage.get('someid');
 Storage.set('someid', someValue);
 ```
 
+#### Template.js ####
+
+`Storage.js` is a basic templating engine in the style of Handlebars. The syntax is a bit more strict, requiring a matching close tag with id. There is no control logic, but looping is supported.
+
+```javascript
+var Template            = NS.use('lib.Template');
+var templateExample     = '<p id="{{ id }}">{{ content.text }}</p> <ul> {{#each item}} <li>{{ label }}</li> {{/each item}} </ul>';
+var templateData        = { "id": "templateTest",
+							"content" : {
+							  "text" : "template text example"
+							},
+							"item" : [
+							  { "label" : "item 1" },
+							  { "label" : "item 2" },
+							  { "label" : "item 3" },
+							  { "label" : "item 4" },
+							  { "label" : "item 5" },
+							  { "label" : "item 6" }
+							]
+						  };
+var renderedTemplate    = Template(templateExample, templateData);
+var renderedHTML        = DOM.create(renderedTemplate);
+body.appendChild(renderedHTML);
+```
 
 ### App ###
 
