@@ -26,7 +26,10 @@
 	NS.loaded = []; // add to loaded when loading complete, never remove
 	NS.processed = []; // add to processed after executing
 	NS.callbacks = []; // Add callbacks in order, but only when all processed
+
 	NS.isProcessing = false;
+
+	NS._dc = []; // Used for doublechecking recursive dependencies
 
 	function NS ( id, NSStrings, callback, scope ) {
 
@@ -126,10 +129,22 @@
 	};
 
 	NS.pushToEnd = function ( NSString, queue ) {
-		var i = queue.length; while (i--) {
-			if (queue[i].id === NSString) {
-				queue.push ( queue.splice(i,1)[0] );
-				return;
+		if (NS._dc.indexOf(NSString) !== -1) {
+			throw ('ERROR::[ infinite recursive dependency for ' + NSString + '. Halting.]' );
+		} else {
+			var i = queue.length; while (i--) {
+				if (queue[i].id === NSString) {
+					queue.push ( queue.splice(i,1)[0] );
+					var j = queue[queue.length-1].NSStrings.length; while (j--) {
+						var ns = queue[queue.length-1].NSStrings[j];
+						// recursive dependency fixes
+						NS._dc.push(ns);
+						NS.pushToEnd(ns, NS.callbacks);
+						// If successful, strip dc back down to starting point
+						NS._dc.pop();
+					}
+					return;
+				}
 			}
 		}
 	};
