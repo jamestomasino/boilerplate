@@ -1,7 +1,10 @@
 (function(NS){
 	"use strict";
 
-	function classWrapper() {
+	var libs = [];
+	var polyfills = [];
+
+	NS ( 'lib.Events', libs.concat(polyfills), function(){
 
 		var eventSubscribers = {}, logEvents = false, logIgnoredEvents = [];
 
@@ -109,10 +112,7 @@
 			}
 		};
 
-	}
+	});
 
-	var libs = [];
-	var polyfills = [];
-	NS ( 'lib.Events', libs.concat(polyfills), classWrapper, this );
 
 })(window.NS);
