@@ -414,7 +414,7 @@ var line1 = Draw.line (100,200,100,400);
 
 Simply style the line and you're good to go. Here's a sample styling:
 
-```css
+```CSS
 position: absolute;
 height: 0px;
 border-width: 1px 0px 0px 0px;
