@@ -1,10 +1,16 @@
 (function (NS) {
-	"use strict"
+	"use strict";
 
-	var supportPageOffset = window.pageXOffset !== undefined;
-	var isCSS1Compat = ((document.compatMode || "") === "CSS1Compat");
+	var libs = ['lib.Easing'];
+	var polyfills = [];
+	if (!window.requestAnimationFrame) {
+		polyfills.push("polyfill.requestAnimationFrame");
+	}
 
-	function classWrapper() {
+	NS ( 'lib.ScrollTo', libs.concat(polyfills), function(){
+
+		var supportPageOffset = window.pageXOffset !== undefined;
+		var isCSS1Compat = ((document.compatMode || "") === "CSS1Compat");
 
 		function ScrollTo(to, callback, duration, easing) {
 
@@ -44,16 +50,7 @@
 			animateScroll();
 		}
 
-		var namespace = new NS ( 'lib' );
-		namespace.ScrollTo = ScrollTo;
-	}
-
-	var polyfills = [];
-
-	if (!window.requestAnimationFrame) {
-		polyfills.push("polyfill.requestAnimationFrame");
-	}
-
-	NS.load ( ['lib.Easing'].concat(polyfills), classWrapper, this );
+		return ScrollTo;
+	});
 
 })(window.NS);

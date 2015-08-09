@@ -1,7 +1,14 @@
 (function(NS){
 	"use strict";
 
-	function classWrapper () {
+	var libs = [
+		'lib.Delegate',
+		'lib.Events',
+		'app.model.CONST'];
+	var polyfills = [];
+
+	NS( 'app.controller.SampleController', libs.concat(polyfills), function(){
+
 		//---------------------------------------------------------------
 		//------------------ Global Vars and Libs -----------------------
 		//---------------------------------------------------------------
@@ -49,12 +56,7 @@
 			this.model.sampleMethod();
 		};
 
-
-		var namespace = new NS ( 'app.controller' );
-		namespace.SampleController = SampleController;
-
-	}
-
-	NS.load ( ['lib.Delegate', 'lib.Events', 'app.model.CONST'], classWrapper, this);
+		return SampleController;
+	});
 
 })(window.NS);

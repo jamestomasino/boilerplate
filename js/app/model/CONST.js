@@ -1,24 +1,29 @@
 (function(NS){
 	"use strict";
 
-	var CONST = {};
+	var libs = [];
+	var polyfills = [];
 
-	// APPLICATION
-	CONST.APPLICATION_READY = 'APPLICATION_READY';
+	NS('app.model.CONST', libs.concat(polyfills), function(){
 
-	// MODES
-	CONST.MODE_SAMPLE       = 'MODE_SAMPLE';
+		var CONST = {};
 
-	// UI EVENTS
-	CONST.UI_EVENT_NAME_1   = 'UI_EVENT_NAME_1';
+		// APPLICATION
+		CONST.APPLICATION_READY = 'APPLICATION_READY';
 
-	// DATA EVENTS
-	CONST.DATA_EVENT_NAME_1 = 'DATA_EVENT_NAME_1';
+		// MODES
+		CONST.MODE_SAMPLE       = 'MODE_SAMPLE';
 
-	// CONFIGURATION
-	CONST.UI_BIND_TYPE      = 'touchend click';
+		// UI EVENTS
+		CONST.UI_EVENT_NAME_1   = 'UI_EVENT_NAME_1';
 
-	var namespace = new NS ( 'app.model' );
-	namespace.CONST = CONST;
+		// DATA EVENTS
+		CONST.DATA_EVENT_NAME_1 = 'DATA_EVENT_NAME_1';
+
+		// CONFIGURATION
+		CONST.UI_BIND_TYPE      = 'touchend click';
+
+		return CONST;
+	});
 
 })(window.NS);

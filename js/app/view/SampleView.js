@@ -1,7 +1,13 @@
 (function(NS){
 	"use strict";
 
-	function classWrapper () {
+	var libs = [
+		'lib.Events',
+		'lib.Delegate',
+		'app.model.CONST'];
+	var polyfills = [];
+
+	NS ('app.view.SampleView', libs.concat(polyfills), function(){
 
 		//---------------------------------------------------------------
 		//------------------ Global Vars and Libs -----------------------
@@ -51,11 +57,7 @@
 			console.log ( 'SampleView::onSampleDataEvent -', data );
 		};
 
-		var namespace = new NS ( 'app.view' );
-		namespace.SampleView = SampleView;
-
-	}
-
-	NS.load ( ['lib.Events', 'lib.Delegate', 'app.model.CONST'], classWrapper, this);
+		return SampleView;
+	});
 
 })(window.NS);

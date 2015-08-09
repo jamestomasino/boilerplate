@@ -1,32 +1,31 @@
 (function (NS) {
-	"use strict"
+	"use strict";
 
-	/*
-	jsonp('http://www.helloword.com/something.json', callback, error);
-	*/
+	var libs = [];
+	var polyfills = [];
 
-	function JSONP(url, callbackFunction, errorFunction)
-	{
-		// Create temporary global callback function, but delete reference on use
-		var callbackName = 'JSONP_CALLBACK_' + Math.round(100000 * Math.random());
-		var script = document.createElement('script');
-		script.onerror = function(err) {
-			delete window[callbackName];
-			document.body.removeChild(script);
-			errorFunction(err);
-		};
+	NS ( 'lib.JSONP', libs.concat(polyfills), function(){
 
-		window[callbackName] = function(data) {
-			delete window[callbackName];
-			document.body.removeChild(script);
-			callbackFunction(data);
-		};
+		return function (url, callbackFunction, errorFunction)
+		{
+			// Create temporary global callback function, but delete reference on use
+			var callbackName = 'JSONP_CALLBACK_' + Math.round(100000 * Math.random());
+			var script = document.createElement('script');
+			script.onerror = function(err) {
+				delete window[callbackName];
+				document.body.removeChild(script);
+				errorFunction(err);
+			};
 
-		script.src = url + (url.indexOf('?') >= 0 ? '&' : '?') + 'callback=' + callbackName;
-		document.body.appendChild(script);
-	}
+			window[callbackName] = function(data) {
+				delete window[callbackName];
+				document.body.removeChild(script);
+				callbackFunction(data);
+			};
 
-	var namespace = new NS ( 'lib' );
-	namespace.JSONP = JSONP;
+			script.src = url + (url.indexOf('?') >= 0 ? '&' : '?') + 'callback=' + callbackName;
+			document.body.appendChild(script);
+		}
+	});
 
 })(window.NS);

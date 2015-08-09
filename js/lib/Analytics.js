@@ -1,7 +1,13 @@
 (function (NS) {
 	"use strict";
 
-	function classWrapper() {
+	var libs = [];
+	var polyfills = [];
+	if (!document.addEventListener) {
+		polyfills.push("polyfill.addEventListener");
+	}
+
+	NS ('lib.Analytics', libs.concat(polyfills), function(){
 
 		/*************************************************************************/
 		/***************************** Analytics *********************************/
@@ -102,19 +108,7 @@
 			window.ga('send', trackObj, {'nonInteraction': 1});
 		};
 
-		var namespace = new NS ( 'lib' );
-		namespace.Analytics = Analytics;
-
-	}
-
-	var libs = [];
-
-	var polyfills = [];
-
-	if (!document.addEventListener) {
-		polyfills.push("polyfill.addEventListener");
-	}
-
-	NS.load ( libs.concat(polyfills), classWrapper, this );
+		return Analytics;
+	});
 
 })(window.NS);

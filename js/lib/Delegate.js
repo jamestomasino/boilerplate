@@ -1,11 +1,16 @@
 (function(NS){
 	"use strict";
 
-	var namespace = new NS ( 'lib' );
-	namespace.Delegate = function(fn, context) {
-		return function() {
-			fn.apply(context, arguments);
+	function classWrapper () {
+		return function(fn, context) {
+			return function() {
+				fn.apply(context, arguments);
+			};
 		};
-	};
+	}
+
+	var libs = [];
+	var polyfills = [];
+	NS ( 'lib.Delegate', libs.concat(polyfills), classWrapper, this );
 
 })(window.NS);

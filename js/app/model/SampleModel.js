@@ -1,7 +1,10 @@
 (function(NS){
 	"use strict";
 
-	function classWrapper () {
+	var libs = ['lib.Events', 'lib.Ajax', 'lib.Delegate', 'app.model.CONST']
+	var polyfills = [];
+
+	NS ( 'app.model.SampleModel', libs.concat(polyfills), function(){
 
 		//---------------------------------------------------------------
 		//------------------ Global Vars and Libs -----------------------
@@ -98,11 +101,8 @@
 			console.log (error);
 		};
 
-		var namespace = new NS ( 'app.model' );
-		namespace.SampleModel = SampleModel;
+		return SampleModel;
 
-	}
-
-	NS.load ( ['lib.Events', 'lib.Ajax', 'lib.Delegate', 'app.model.CONST'], classWrapper, this);
+	});
 
 })(window.NS);

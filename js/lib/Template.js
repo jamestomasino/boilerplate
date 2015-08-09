@@ -1,76 +1,81 @@
 (function (NS) {
 	"use strict"
 
-	if (!Array.isArray) {
-		Array.isArray = function(arg) {
-			return Object.prototype.toString.call(arg) === '[object Array]';
-		};
-	}
+	var libs = [];
+	var polyfills = [];
 
-	var matcheach = /\{\{\s*\#each\s*(.*?)\}\}(.*)\{{\s*\/\s*each\s*\1\}\}/gi;
-	var matchpre = /\{\{\s*/;
-	var matchsuf = /\s*\}\}/;
+	NS ( 'lib.Template', libs.concat(polyfills), function(){
 
-	function t(template,data) {
-
-		function r(template,obj,prefix) {
-
-			for (var k in obj) {
-				if (Array.isArray(obj[k])) {
-					continue;
-				} else if (typeof obj[k] === "object" && obj[k] !== null) {
-					template=r( template, obj[k], (prefix) ? prefix + '\.' + k : k );
-				} else {
-					if (!obj.hasOwnProperty(k)) continue;
-					var match = (prefix) ? prefix + '\.' + k : k;
-					template=template.replace(new RegExp(matchpre.source + match + matchsuf.source,'g'), obj[k]);
-				}
-			}
-			return template;
+		if (!Array.isArray) {
+			Array.isArray = function(arg) {
+				return Object.prototype.toString.call(arg) === '[object Array]';
+			};
 		}
 
-		function e(template,data) {
-			matcheach.lastIndex=0; // Reset for ie8
+		var matcheach = /\{\{\s*\#each\s*(.*?)\}\}(.*)\{{\s*\/\s*each\s*\1\}\}/gi;
+		var matchpre = /\{\{\s*/;
+		var matchsuf = /\s*\}\}/;
 
-			var each = matcheach.exec(template);
-			var trim = template.replace(matcheach, '{{TEMPLATE-$1}}');
-			var output = '';
+		function t(template,data) {
 
-			if (each && each.length) {
-				each.shift();
-				var keys = [];
-				var patterns = [];
-				var results = [];
-				while (each.length) {
-					keys.push( each.shift() );
-					patterns.push ( each.shift() );
-				}
-				for (var i=0; i < keys.length; i++) {
-					var subdata = data[keys[i]];
-					results[i] = '';
-					if (subdata) {
-						if (Array.isArray(subdata)) {
-							for (var j=0; j<subdata.length; ++j) {
-								results[i] += e(patterns[i], subdata[j]);
-							}
-						} else {
-							results[i] += e(patterns[i], subdata);
-						}
-						var match = 'TEMPLATE-' + keys[i];
-						trim=trim.replace(new RegExp(matchpre.source + match + matchsuf.source,'g'), results[i]);
+			function r(template,obj,prefix) {
+
+				for (var k in obj) {
+					if (Array.isArray(obj[k])) {
+						continue;
+					} else if (typeof obj[k] === "object" && obj[k] !== null) {
+						template=r( template, obj[k], (prefix) ? prefix + '\.' + k : k );
+					} else {
+						if (!obj.hasOwnProperty(k)) continue;
+						var match = (prefix) ? prefix + '\.' + k : k;
+						template=template.replace(new RegExp(matchpre.source + match + matchsuf.source,'g'), obj[k]);
 					}
 				}
+				return template;
 			}
 
-			output += r(trim, data, "");
-			return output;
+			function e(template,data) {
+				matcheach.lastIndex=0; // Reset for ie8
+
+				var each = matcheach.exec(template);
+				var trim = template.replace(matcheach, '{{TEMPLATE-$1}}');
+				var output = '';
+
+				if (each && each.length) {
+					each.shift();
+					var keys = [];
+					var patterns = [];
+					var results = [];
+					while (each.length) {
+						keys.push( each.shift() );
+						patterns.push ( each.shift() );
+					}
+					for (var i=0; i < keys.length; i++) {
+						var subdata = data[keys[i]];
+						results[i] = '';
+						if (subdata) {
+							if (Array.isArray(subdata)) {
+								for (var j=0; j<subdata.length; ++j) {
+									results[i] += e(patterns[i], subdata[j]);
+								}
+							} else {
+								results[i] += e(patterns[i], subdata);
+							}
+							var match = 'TEMPLATE-' + keys[i];
+							trim=trim.replace(new RegExp(matchpre.source + match + matchsuf.source,'g'), results[i]);
+						}
+					}
+				}
+
+				output += r(trim, data, "");
+				return output;
+			}
+
+			return e(template, data);
+
 		}
 
-		return e(template, data);
-
-	}
-
-	var namespace = new NS ( 'lib' );
-	namespace.Template = t;
+		return t;
+	});
 
 })(window.NS);

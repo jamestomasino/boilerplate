@@ -1,7 +1,13 @@
 (function(NS){
 	"use strict";
 
-	function classWrapper() {
+	var libs = [ 'lib.Delegate', 'lib.Events' ]
+	var polyfills = [];
+	if (!document.addEventListener) {
+		polyfills.push("polyfill.addEventListener");
+	}
+
+	NS ( 'lib.Bind', libs.concat(polyfills), function(){
 
 		var Delegate = NS.use('lib.Delegate');
 		var Events = NS.use('lib.Events');
@@ -80,20 +86,7 @@
 			Events.unsubscribe( this.addMessage, this.attachProxy );
 		};
 
-		var namespace = new NS ('lib');
-		namespace.Bind = Bind;
-	}
-
-	var libs = [
-		'lib.Delegate',
-		'lib.Events' ]
-
-	var polyfills = [];
-
-	if (!document.addEventListener) {
-		polyfills.push("polyfill.addEventListener");
-	}
-
-	NS.load ( libs.concat(polyfills), classWrapper, this );
+		return Bind;
+	});
 
 })(window.NS);
