@@ -2,12 +2,11 @@
 	"use strict";
 
 	var libs = ['lib.Easing'];
-	var polyfills = [];
 	if (!window.requestAnimationFrame) {
-		polyfills.push("polyfill.requestAnimationFrame");
+		libs.push("polyfill.requestAnimationFrame");
 	}
 
-	NS ( 'lib.ScrollTo', libs.concat(polyfills), function(){
+	NS ( 'lib.ScrollTo', libs, function(){
 
 		var supportPageOffset = window.pageXOffset !== undefined;
 		var isCSS1Compat = ((document.compatMode || "") === "CSS1Compat");

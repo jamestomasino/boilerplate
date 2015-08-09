@@ -1,10 +1,7 @@
 (function (NS) {
 	"use strict";
 
-	var libs = [];
-	var polyfills = [];
-
-	NS ( 'lib.Storage', libs.concat(polyfills), function(){
+	NS ( 'lib.Storage', [], function(){
 
 		var Storage;
 		if ( NS.global.localStorage && JSON ) {

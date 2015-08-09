@@ -1,10 +1,7 @@
 (function (NS) {
 	"use strict"
 
-	var libs = [];
-	var polyfills = [];
-
-	NS ( 'lib.Template', libs.concat(polyfills), function(){
+	NS ( 'lib.Template', [], function(){
 
 		if (!Array.isArray) {
 			Array.isArray = function(arg) {

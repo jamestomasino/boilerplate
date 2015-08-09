@@ -2,9 +2,8 @@
 	"use strict";
 
 	var libs = [ 'lib.Prefix' ];
-	var polyfills = [];
 
-	NS ( 'lib.Draw', libs.concat(polyfills), function(){
+	NS ( 'lib.Draw', libs, function(){
 		var Draw = {};
 
 		Draw.noTransform = true;

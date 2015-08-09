@@ -1,10 +1,7 @@
 (function (NS) {
 	"use strict";
 
-	var libs = [];
-	var polyfills = [];
-
-	NS ( 'lib.DOM', libs.concat(polyfills), function(){
+	NS ( 'lib.DOM', [], function(){
 		var DOM = {};
 
 		DOM.create = function( str ) {

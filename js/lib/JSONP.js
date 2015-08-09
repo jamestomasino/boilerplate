@@ -1,10 +1,7 @@
 (function (NS) {
 	"use strict";
 
-	var libs = [];
-	var polyfills = [];
-
-	NS ( 'lib.JSONP', libs.concat(polyfills), function(){
+	NS ( 'lib.JSONP', [], function(){
 
 		return function (url, callbackFunction, errorFunction)
 		{

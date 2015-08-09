@@ -1,10 +1,7 @@
 (function (NS) {
 	"use strict";
 
-	var libs = [];
-	var polyfills = [];
-
-	NS ( 'lib.Prefix', libs.concat(polyfills), function(){
+	NS ( 'lib.Prefix', [], function(){
 		var Prefix = function () {};
 
 		Prefix.hasStyle = function ( prefixlist ) {

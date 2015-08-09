@@ -1,10 +1,7 @@
 (function(NS){
 	"use strict";
 
-	var libs = [];
-	var polyfills = [];
-
-	NS ( 'lib.Events', libs.concat(polyfills), function(){
+	NS ( 'lib.Events', [], function(){
 
 		var eventSubscribers = {}, logEvents = false, logIgnoredEvents = [];
 

@@ -2,9 +2,8 @@
 	"use strict";
 
 	var libs = ['lib.Delegate'];
-	var polyfills = [];
 
-	NS ('lib.Ajax', libs.concat(polyfills), function(){
+	NS ('lib.Ajax', libs, function(){
 
 		var Delegate = NS.use('lib.Delegate');
 

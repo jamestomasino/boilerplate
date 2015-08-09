@@ -2,12 +2,11 @@
 	"use strict";
 
 	var libs = [];
-	var polyfills = [];
 	if (!document.addEventListener) {
-		polyfills.push("polyfill.addEventListener");
+		libs.push("polyfill.addEventListener");
 	}
 
-	NS ('lib.Analytics', libs.concat(polyfills), function(){
+	NS ('lib.Analytics', libs, function(){
 
 		/*************************************************************************/
 		/***************************** Analytics *********************************/
