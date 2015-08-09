@@ -16,7 +16,7 @@ remain the style and structure of the website.
 - [JavaScript](#javascript)
   - [Micro-Libraries](#micro-libraries)
     - [NS.js](#nsjs)
-      - [NS.load](#nsload)
+      - [NS](#ns)
       - [NS.use](#nsuse)
       - [NS.baseURL](#nsbaseurl)
       - [NS.createXMLHTTPObject](#nscreatexmlhttpobject)
@@ -101,16 +101,24 @@ serves as the dependency loader.
 `NS.js` (Namespace) manages the loading and access of dependencies across the
 application.
 
-##### NS.load #####
+##### NS #####
 
-To use another class or library, use the `NS.load` method. If the external
+To use another class or library, use the `NS` function. If the external
 resource hasn't already been loaded, NS will make the necessary ajax request to
 load the resource and any dependencies. When complete, it will fire the
 callback function.
 
 ```javascript
-NS.load (['lib.to.Load', 'another.lib.Loading'], callback, scope);
+// NS (id, libs, callback, scope);
+NS ( 'path.to.Label', ['lib.to.Load', 'another.lib.Loading'], callback, scope);
 ```
+
+There are three required parameters in the NS method:
+
+- id : If you are defining a class, this is where you name it. If your callback method has a return value it will be stored in an object at this path/name. Dot syntax works here (e.g., 'org.video.VideoPlayer')
+- libs : An array of other namespaced objects to load as dependencies. An empty array is required if there are no dependencies.
+- callback : A function to call when all dependencies have been loaded. If this returns anything other than null, it will be stored in an object matching the `id` string.
+- scope (optional) : If you want your callback function to operate in a scope other than window, define it here.
 
 _This method was added as a result of xHR synchronous loading [being
 deprecated](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Synchronous_and_Asynchronous_Requests#Synchronous_request)
