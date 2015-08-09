@@ -129,22 +129,21 @@
 	};
 
 	NS.pushToEnd = function ( NSString, queue ) {
-		if (NS._dc.indexOf(NSString) !== -1) {
-			throw ('ERROR::[ infinite recursive dependency for ' + NSString + '. Halting.]' );
-		} else {
-			var i = queue.length; while (i--) {
-				if (queue[i].id === NSString) {
-					queue.push ( queue.splice(i,1)[0] );
-					var j = queue[queue.length-1].NSStrings.length; while (j--) {
-						var ns = queue[queue.length-1].NSStrings[j];
-						// recursive dependency fixes
+		var i = queue.length; while (i--) {
+			if (queue[i].id === NSString) {
+				var qi =  queue.splice(i,1)[0];
+				queue.push (qi);
+				var j = qi.NSStrings.length; while (j--) {
+					var ns = qi.NSStrings[j];
+					if (NS._dc.indexOf(ns) !== -1) {
+						throw ('ERROR::[ infinite recursive dependency for ' + ns + '. Halting.]' );
+					} else {
 						NS._dc.push(ns);
 						NS.pushToEnd(ns, NS.callbacks);
-						// If successful, strip dc back down to starting point
 						NS._dc.pop();
 					}
-					return;
 				}
+				return;
 			}
 		}
 	};
