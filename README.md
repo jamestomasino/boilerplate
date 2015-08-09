@@ -217,6 +217,9 @@ Initialize your analytics class by passing it your Google Analytics ID.
 var analytics = new Analytics ( 'UA-971204-A' );
 ```
 
+The Analytics class automatically interupts all links that exit your domain to
+immediately track an exit event before navigation.
+
 ##### Analytics.trackEvent() #####
 
 Track events in a convenient way that doesn't interfere with bounce rates or
@@ -271,6 +274,21 @@ appropriate attribute, like the following example:
 Properties values are updated or inserted into these DOM elements via
 innerHTML, or value if they are input, textarea, or select types.
 
+#### Debounce.js ####
+
+Some events fire far too often to be properly usable. The scroll event is
+notorious for this. Debounce is a limiter for events. You can indicate how
+often any given event should be allowed to fire and the class will filter the
+rest.
+
+```javascript
+// Debounce ( callback, fireRate, fire_at_start, fire_at_end )
+var debounceScroll = Debounce(hasScrolled, 66, true, true);
+window.addEventListener("scroll", debounceScroll, false);
+```
+In the above example, the scroll event will be limited to firing once every
+66ms. An event will be triggered immediately, and an extra after the very last
+polling.
 
 #### DOM.js ####
 
@@ -349,6 +367,22 @@ DOM.addClass(elementByID, 'someclass');
 DOM.addClass('#someid', 'someclass');
 ```
 
+##### DOM.hasClass() #####
+
+Returns a bool indicating whether the DOM object contains a certain class.
+
+```javascript
+var hasClass = DOM.hasClass(element_name_id_or_reference, 'someclass');
+```
+
+##### DOM.toggleClass() #####
+
+Adds or removes a class on a DOM object.
+
+```javascript
+DOM.toggleClass(element_name_id_or_reference, 'someclass');
+```
+
 #### Delegate.js ####
 
 `Delegate.js` is a very simple wrapper that enables a global function called
@@ -364,7 +398,35 @@ var c = Delegate(callbackFunc, this);
 Event.subscribe ('SOME_EVENT', c);
 Event.unsubscribe ('SOME_EVENT', c);
 ```
+#### Draw.js ####
 
+`Draw.js` wraps basic drawing helpers.
+
+##### Draw.line () #####
+
+The line method allows for the drawing of very simple lines by creating DOM
+objects with the appropriate CSS transforms.
+
+```javascript
+// Draw.line (x1, y1, x2, y2)
+var line1 = Draw.line (100,200,100,400);
+```
+
+Simply style the line and you're good to go. Here's a sample styling:
+
+```css
+position: absolute;
+height: 0px;
+border-width: 1px 0px 0px 0px;
+border-style: solid;
+border-color: #666;
+transform: translateZ(1px);
+-webkit-backface-visibility: hidden;
+-moz-backface-visibility: hidden;
+-ms-backface-visibility: hidden;
+-o-backface-visibility: hidden;
+backface-visibility: hidden;
+```
 
 #### Events.js ####
 
