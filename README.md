@@ -110,7 +110,7 @@ be stored in a global object matching the `id` string.
 
 ```javascript
 // NS (id, libs, callback, scope);
-NS ( 'path.to.ClassName, ['lib.to.Load', 'another.lib.Loading'], callback, scope);
+NS ( 'path.to.ClassName', ['lib.to.Load', 'another.lib.Loading'], callback, scope);
 // creates a new object at window.path.to.ClassName
 ```
 
