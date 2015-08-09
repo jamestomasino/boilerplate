@@ -103,22 +103,34 @@ application.
 
 ##### NS #####
 
-To define a class, library, or module, use the `NS` function. If the external
-resource hasn't already been loaded, NS will make the necessary ajax request to
-load the resource and any dependencies. When complete, it will fire the
-callback function.
+To define a class, library, or module, use the `NS` function. NS will make the
+necessary ajax request to load the any dependencies. When complete, it will
+fire the callback function. If the callback function returns any value, it will
+be stored in a global object matching the `id` string.
 
 ```javascript
 // NS (id, libs, callback, scope);
-NS ( 'path.to.Label', ['lib.to.Load', 'another.lib.Loading'], callback, scope);
+NS ( 'path.to.ClassName, ['lib.to.Load', 'another.lib.Loading'], callback, scope);
+// creates a new object at window.path.to.ClassName
 ```
 
 There are three required parameters in the NS method:
 
-- `id` : If you are defining a class, this is where you name it. If your callback method has a return value it will be stored in an object at this path/name. Dot syntax works here (e.g., 'org.video.VideoPlayer')
-- `libs` : An array of other namespaced objects to load as dependencies. An empty array is required if there are no dependencies.
-- `callback` : A function to call when all dependencies have been loaded. If this returns anything other than null, it will be stored in an object matching the `id` string.
-- `scope` (optional) : If you want your callback function to operate in a scope other than window, define it here.
+- `id` : If you are defining a class, this is where you name it. If your
+  callback method has a return value it will be stored in an object at this
+  path/name. Dot syntax works here (e.g., 'org.video.VideoPlayer'). If you are
+  not creating a class, you should still name the closure with an id as a means
+  of debugging.
+- `libs` : An array of other namespaced objects to load as dependencies. An
+  empty array is required if there are no dependencies.
+- `callback` : A function to call when all dependencies have been loaded. If
+  this returns anything other than null, it will be stored in an object
+  matching the `id` string.
+- `scope` (optional) : If you want your callback function to operate in a scope
+  other than window, define it here.
+
+The NS function will attempt to identify infinite recursion in dependencies. If
+this is encountered an error will be thrown and execution halted.
 
 _This method was added as a result of xHR synchronous loading [being
 deprecated](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Synchronous_and_Asynchronous_Requests#Synchronous_request)
@@ -132,6 +144,15 @@ any time. This method is provided as a convenience.
 
 ```javascript
 var LocalCopyOfLib = NS.use ("path.to.class.or.lib");
+```
+
+##### NS.debug #####
+
+Setting the `NS.debug` property to `true` will enable console logs to help
+debug dependency or load issues you might encounter.
+
+```javascript
+NS.debug = true;
 ```
 
 ##### NS.baseURL #####
